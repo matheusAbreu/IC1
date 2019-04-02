@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-var direcao ={baixo: 1, esquerda: 2, cima: 3, direita: 4};
+//enum Direcao  {baixo= 1, esquerda= 2, cima= 3, direita= 4};
+var direcao = {baixo= 1, esquerda= 2, cima= 3, direita= 4};
 
-var Ligacao = class Ligacao{
+class Ligacao{
     constructor()
     {
         this.nome = new List();
@@ -20,13 +21,18 @@ var Ligacao = class Ligacao{
         this.direcao.add(noDirecao);
     }
 };
-var noArvore = class noArvore{
+class noArvore{
     constructor()
     {
         this.nome = "";
         this.ligacao = new Ligacao();
     }
-    constructor(nome, ligacao)
+    constructor(nome)
+    {
+        this.nome = nome;
+        this.ligacao = new Ligacao();
+    }
+    constructor(nome, ligacao = new Ligacao())
     {
         this.nomeDoNo = nome;
         this.ligacao = ligacao;
@@ -36,10 +42,23 @@ var noArvore = class noArvore{
         this.ligacao.AddLigacao(noNome,noDirecao);
     }
 };
-var noGrafo = class noGrafo {
-    constructor(listaNo, nomeDoGrafo){
-        this.listaDeNos = listaNo;
+class noGrafo {
+    constructor(){
+        this.nome = "";
+        this.listaDeNos = new List();
+    }
+    constructor(nomeDoGrafo){
+        this.listaDeNos = new List();
         this.nome = nomeDoGrafo;
+    }
+    addNoGrafo(nomeDoNo)
+    {
+        var noTemp = new noArvore(nomeDoNo);
+        this.listaDeNos.add(notemp);
+    }
+    addLigacaoEntreNosDoGrafo(primeirNo, direcao, segundoNo)
+    {
+        
     }
 };
 
