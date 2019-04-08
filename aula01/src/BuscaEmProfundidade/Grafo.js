@@ -8,15 +8,15 @@ var ligamentos = {
     nomeDoNo:""        
 }
 
-var no = {
-    nome: "",
-    listaDeLigamentos: [],
+function no(){
+    this.nome= "";
+    this.listaDeLigamentos = [];
 
-    NovoNo: function(newNome)
+    this.NovoNo = function(newNome)
     {
         this.nome = newNome;
-    },
-    AddLigamento: function(novaDir, noRef)
+    };
+    this.AddLigamento = function(novaDir, noRef)
     {
         var novo = new ligamentos();
         novo.dir = novaDir;
@@ -24,18 +24,26 @@ var no = {
         this.listaDeLigamentos.push(novo);
     }
 }
-
+function GeraGrafo(myText)
+{
+    var temp = new no(), myList = [];
+        for(var i = 0; i <10;i++)
+        {
+            temp.NovoNo("no" + i.toString());
+            myList.push(temp);
+            myText += "\n";
+            myText += myList[i].nome + "->";
+        }           
+        alert(myText);
+}
 export default class Grafo extends Component{
 
     cardGrafo = {
         title: "Grafo",
-        text: "Lista de nó",
+        text: "Lista de nó:",
         listaDeNos: [],
-
-        GeraGrafo: function()
-        {
-            
-        }
+        action: () => GeraGrafo(this.text)/**/
+        
     }
     render()
     {

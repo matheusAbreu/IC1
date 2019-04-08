@@ -8,6 +8,7 @@ const LittleCard = (props) => (
         <div className="card-body">
             <h5 className="card-title"></h5>
             <p className="card-text">{props.text}</p>
+            <button type="submit" className="btn btn-primary" onClick={props.action}>Button</button>
         </div>
     </div>
 
