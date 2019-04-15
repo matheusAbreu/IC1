@@ -2,100 +2,119 @@ import React, { Component } from 'react';
 import LittleCard from './LittleCard';
 
 //enum Direcao  {baixo= 1, esquerda= 2, cima= 3, direita= 4};
-var direcao = {baixo: "baixo", esquerda: "esq", cima: "cima", direita: "direita"};
+var direcao = { baixo: "baixo", esquerda: "esq", cima: "cima", direita: "direita" };
 function ligamentos(myName, dir) {
     this.dir = dir;
-    this.nomeDoNo=myName;
-    this.imprimaLigamento = function ()        
-    {
-        var temp = this.dir + ':\n'+this.nomeDoNo;
+    this.nomeDoNo = myName;
+    this.imprimaLigamento = function () {
+        var temp = this.dir + ':\n' + this.nomeDoNo;
         return temp;
     }
 }
 
-function no(MyName, lista){
-    this.nome= MyName;
-    this.listaDeLigamentos =lista;
+function no(MyName, lista = new Array()) {
+    this.nome = MyName;
+    this.listaDeLigamentos = lista;
 
-    this.NovoNo = function(newNome)
-    {
+    this.NovoNo = function (newNome) {
         this.nome = newNome;
     };
-    this.AddLigamento = function(novaDir, noRef)
-    {
-        var novo = new ligamentos();
-        novo.dir = novaDir;
-        novo.nomeDoNo = noRef;
-        this.listaDeLigamentos.push(novo);
-    }
-    this.ImprimaListaDeLigamentos = function()
-    {
-        var temp = '';
-        for(var i =0; i < this.listaDeLigamentos.length; i++)
-        {
-            temp += this.listaDeLigamentos[i].imprimaLigamento() + '\n';
+    this.ProcuraNoNasLigacoes = function (nomeDoNo) {
+        if (this.listaDeLigamentos.length > 0) {
+            for (var i = 0; i < this.listaDeLigamentos.length; i++) {
+                if (this.listaDeLigamentos[i].nome == nomeDoNo)
+                    return this.listaDeLigamentos[i];
+            }
         }
-        return temp;
+        return null;
+    };
+    this.AddLigamento = function (dir, NoLigado) {
+        var noTemp = new ligamentos(dir, '');
+    }
+    this.ImprimaListaDeLigamentos = function () {
+        var temp = '';
+        if (this.listaDeLigamentos.length > 0) {
+            for (var i = 0; i < this.listaDeLigamentos.length; i++) {
+                temp += this.listaDeLigamentos[i].imprimaLigamento() + '\n';
+            }
+            return temp;
+        }
     }
 }
 
-export default class Grafo extends Component{
+export default class Grafo extends Component {
 
-    constructor(props) 
-    {
+    constructor(props) {
         super(props);
         this.title = "Grafo";
         this.state = {
-            nos:[new no('No A', [new ligamentos('No B', direcao.baixo), new ligamentos('No E', direcao.direita) ]),
-           new no('No B', [new ligamentos('No A', direcao.cima), new ligamentos('No C', direcao.baixo), new ligamentos('No F', direcao.direita) ])],/*, new no('No B'), new no('No C'), new no('No D'),new no('No E'),
-            new no('No F'), new no('No G'), new no('No H'), new no('No I'),new no('No J'),
-            new no('No L'), new no('No M'), new no('No N'), new no('No O'),new no('No P'),
-            new no('No Q'), new no('No R'), new no('No S')],*/
-            novoNo:''
+            nos: [new no('A'), new no('B'), new no('C'), new no('D'), new no('E'),
+            new no('F'), new no('G'), new no('H'), new no('I'), new no('J'), new no('K'),
+            new no('L'), new no('M'), new no('N'), new no('O'), new no('P'), new no('Q'),
+            new no('R'), new no('S')],
+            noInicial: '',
+            noFinal: ''
+
         };
         this.handleSubmit = this.handleSubmit.bind(this);
-		this.handleTextChange = this.handleTextChange.bind(this);
+        this.handleTextChangeNoInicial = this.handleTextChangeNoInicial.bind(this);
+        this.handleTextChangeNoFinal = this.handleTextChangeNoFinal.bind(this);
     }
-    handleSubmit(e)
-	{//atualizando a lista de comentarios
-		this.setState({
+    handleSubmit(e) {//atualizando a lista de comentarios
+		/*this.setState({
 			nos:[
                 ... this.state.nos,
-                {text:this.state.novoNo}
+                {text:this.state.noInicial}
 			]
-		});
-		//Limpando o campo text
-		this.setState({novoNo:''});
-		//Removendo o refresh da pag ao submeter o conteudo
-		e.preventDefault();
+        });*/
+        for (var i = 0; i < this.state.nos.length; i++) {
+            if (this.state.nos[i].nome == this.state.noInicial) {
+
+            }
+        }
+        //Limpando o campo text
+        this.setState({ noInicial: '' });
+        this.setState({ noFinal: '' });
+        //Removendo o refresh da pag ao submeter o conteudo
+        e.preventDefault();
     }
-    handleTextChange(e)
-	{/*Alterando o estado da aplicação para que os caracters inseridos na caixa de texto
+    handleTextChangeNoInicial(e) {/*Alterando o estado da aplicação para que os caracters inseridos na caixa de texto
 		fiquem visiveis*/
-		this.setState({novoNo: e.target.value});
-	}
-    render()
-    {
+        this.setState({ noInicial: e.target.value });
+    }
+    handleTextChangeNoFinal(e) {/*Alterando o estado da aplicação para que os caracters inseridos na caixa de texto
+		fiquem visiveis*/
+        this.setState({ noFinal: e.target.value });
+    }
+    render() {
         return (
             <div className="container text-center">
-            <h2>{this.props.title}</h2>
-				<form onSubmit={this.handleSubmit}> 
-                <input 
-					value={this.state.novoNo} 
-					onChange={this.handleTextChange}
-					/>
-					<button type="submit">Comentar</button>
-				</form>
+                <h2>{this.props.title}</h2>
+                <form className='input-group' onSubmit={this.handleSubmit}>
+                    <input className='form-control' placeholder='No de Inicio' style={{ width: '9rem', paddingLeft: '1rem', margin: '0' }} value={this.state.noInicial} onChange={this.handleTextChangeNoInicial} />
+                    
+                    <div className='dropdown-menu' aria-labelledby="dropdownMenu2">
+                        <button className='dropdown-item' type='button' value={direcao.direita}>Action</button>
+                        <button className='dropdown-item' type='button' value={direcao.esquerda}>Another action</button>
+                        <button className='dropdown-item' type='button' value={direcao.cima}>Another action</button>
+                        <button className='dropdown-item' type='button' value={direcao.baixo}>Something else here</button>
+                    </div>
+
+                    <input className='form-control' placeholder='No Final' style={{ width: '9rem', paddingLeft: '1rem' }} value={this.state.noFinal} onChange={this.handleTextChangeNoFinal} />
+                    <div className='input-group-prepend'>
+                        <button className='btn btn-primary' type="submit">Inserir Ligacao</button>
+                    </div>
+                </form>
                 <div className="row">
-                {this.state.nos.map((nos, index)=>{
-					return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()}/>
-				})}
+                    {this.state.nos.map((nos, index) => {
+                        return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()} />
+                    })}
                 </div>
-                
+
             </div>
         );
     }
-    
+
 };
 
 /*function GeraGrafo(myText)
@@ -103,10 +122,10 @@ export default class Grafo extends Component{
     var temp = new no(), myList = [];
         for(var i = 0; i <10;i++)
         {
-            temp.NovoNo("no" + i.toString());
+            temp.noInicial("no" + i.toString());
             myList.push(temp);
             myText += "\n";
             myText += myList[i].nome + "->";
-        }           
+        }
         alert(myText);
 }*/
