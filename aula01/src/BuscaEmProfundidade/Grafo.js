@@ -67,9 +67,23 @@ export default class Grafo extends Component {
                 {text:this.state.noInicial}
 			]
         });*/
-        for (var i = 0; i < this.state.nos.length; i++) {
-            if (this.state.nos[i].nome == this.state.noInicial) {
-
+        var localNoInicio = this.state.noInicial.toUpperCase(), 
+        localNoFinal = this.state.noFinal.toUpperCase();
+        
+        if(this.state.nos.length > 0)
+        {
+            for (var i = 0; i < this.state.nos.length; i++) {
+                if (this.state.nos[i].nome === localNoInicio)
+                {
+                    for (var j= 0; j < this.state.nos.length; j++)
+                    {
+                        if(this.state.nos[i].nome === localNoFinal)
+                        {
+                            
+                        }
+                    }
+                    break;
+                }
             }
         }
         //Limpando o campo text
@@ -91,21 +105,29 @@ export default class Grafo extends Component {
             <div className="container text-center">
                 <h2>{this.props.title}</h2>
                 <form className='input-group' onSubmit={this.handleSubmit}>
-                    <input className='form-control' placeholder='No de Inicio' style={{ width: '9rem', paddingLeft: '1rem', margin: '0' }} value={this.state.noInicial} onChange={this.handleTextChangeNoInicial} />
-                    
-                    <div className='dropdown-menu' aria-labelledby="dropdownMenu2">
-                        <button className='dropdown-item' type='button' value={direcao.direita}>Action</button>
-                        <button className='dropdown-item' type='button' value={direcao.esquerda}>Another action</button>
-                        <button className='dropdown-item' type='button' value={direcao.cima}>Another action</button>
-                        <button className='dropdown-item' type='button' value={direcao.baixo}>Something else here</button>
+                    <input className='form-control' placeholder='No de Inicio' 
+                    style={{ width: '9rem', paddingLeft: '1rem', margin: '0' }} value={this.state.noInicial} 
+                    onChange={this.handleTextChangeNoInicial} />
+
+                    <div className='dropdown input-group-prepend'>
+                        <button id='dirDropdown' className='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                            Escolha a Direcao
+                        </button>
+                        <div className='dropdown-menu' aria-labelledby='dirDropdown'>
+                            <button className='dropdown-item' type='button' value={direcao.direita}>Direita</button>
+                            <button className='dropdown-item' type='button' value={direcao.esquerda}>Esquerda</button>
+                            <button className='dropdown-item' type='button' value={direcao.cima}>Para Cima</button>
+                            <button className='dropdown-item' type='button' value={direcao.baixo}>Para Baixo</button>
+                        </div>
                     </div>
 
                     <input className='form-control' placeholder='No Final' style={{ width: '9rem', paddingLeft: '1rem' }} value={this.state.noFinal} onChange={this.handleTextChangeNoFinal} />
                     <div className='input-group-prepend'>
-                        <button className='btn btn-primary' type="submit">Inserir Ligacao</button>
+                        <button className='btn btn-outline-primary' type="submit">Inserir Ligacao</button>
                     </div>
                 </form>
-                <div className="row">
+
+                <div className='row'>
                     {this.state.nos.map((nos, index) => {
                         return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()} />
                     })}
