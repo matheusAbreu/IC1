@@ -8,8 +8,8 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1>Inteligência Computacional 1</h1>
-        <Grafo />
+        <h1 className='card bg-secondary'>Inteligência Computacional 1 (Abreu vc precisa mudar esta fonte)</h1>
+        <Grafo title={'Grafo00'} />
       </div>
     );
   }
