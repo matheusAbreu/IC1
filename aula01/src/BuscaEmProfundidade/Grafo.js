@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import LittleCard from './LittleCard';
 
 //enum Direcao  {baixo= 1, esquerda= 2, cima= 3, direita= 4};
-var direcao = { baixo: "baixo", esquerda: "esq", cima: "cima", direita: "direita" };
-function ligamentos(myName, dir) {
+var direcao = { baixo: "Baixo", esquerda: "Esquerda", cima: "Cima", direita: "Direita" };
+function ligamentos(dir,passNo) {
     this.dir = dir;
-    this.nomeDoNo = myName;
+    this.no = passNo;
     this.imprimaLigamento = function () {
-        var temp = this.dir + ':\n' + this.nomeDoNo;
+        var temp = this.dir + ':\n' + this.no.nome;
         return temp;
     }
 }
@@ -16,7 +16,8 @@ function no(MyName, lista = new Array()) {
     this.nome = MyName;
     this.listaDeLigamentos = lista;
 
-    this.NovoNo = function (newNome) {
+    this.NovoNo = function (newNome) 
+    {
         this.nome = newNome;
     };
     this.ProcuraNoNasLigacoes = function (nomeDoNo) {
@@ -28,8 +29,10 @@ function no(MyName, lista = new Array()) {
         }
         return null;
     };
-    this.AddLigamento = function (dir, NoLigado) {
-        var noTemp = new ligamentos(dir, '');
+    this.AddLigamento = function (dir, NoLigado) 
+    {
+        var noTemp = new ligamentos(dir, NoLigado);
+        this.listaDeLigamentos.push(noTemp);
     }
     this.ImprimaListaDeLigamentos = function () {
         var temp = '';
@@ -53,12 +56,18 @@ export default class Grafo extends Component {
             new no('L'), new no('M'), new no('N'), new no('O'), new no('P'), new no('Q'),
             new no('R'), new no('S')],
             noInicial: '',
-            noFinal: ''
+            noFinal: '',
+            tempDirecao: 'Escolha a Direcao'
 
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChangeNoInicial = this.handleTextChangeNoInicial.bind(this);
         this.handleTextChangeNoFinal = this.handleTextChangeNoFinal.bind(this);
+        this.ApontandoDirecao = this.ApontandoDirecao.bind(this);
+    }
+    ApontandoDirecao(e)
+    {
+        this.setState({tempDirecao: e.target.value});
     }
     handleSubmit(e) {//atualizando a lista de comentarios
 		/*this.setState({
@@ -77,9 +86,9 @@ export default class Grafo extends Component {
                 {
                     for (var j= 0; j < this.state.nos.length; j++)
                     {
-                        if(this.state.nos[i].nome === localNoFinal)
+                        if(this.state.nos[j].nome === localNoFinal)
                         {
-                            
+                            this.state.nos[i].AddLigamento(this.state.tempDirecao, this.state.nos[j]);
                         }
                     }
                     break;
@@ -89,6 +98,7 @@ export default class Grafo extends Component {
         //Limpando o campo text
         this.setState({ noInicial: '' });
         this.setState({ noFinal: '' });
+        this.setState({tempDirecao: 'Escolha a Direcao'});
         //Removendo o refresh da pag ao submeter o conteudo
         e.preventDefault();
     }
@@ -111,13 +121,13 @@ export default class Grafo extends Component {
 
                     <div className='dropdown input-group-prepend'>
                         <button id='dirDropdown' className='btn btn-primary dropdown-toggle' type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                            Escolha a Direcao
+                            {this.state.tempDirecao}
                         </button>
                         <div className='dropdown-menu' aria-labelledby='dirDropdown'>
-                            <button className='dropdown-item' type='button' value={direcao.direita}>Direita</button>
-                            <button className='dropdown-item' type='button' value={direcao.esquerda}>Esquerda</button>
-                            <button className='dropdown-item' type='button' value={direcao.cima}>Para Cima</button>
-                            <button className='dropdown-item' type='button' value={direcao.baixo}>Para Baixo</button>
+                            <button className='dropdown-item' type='button' onClick={this.ApontandoDirecao} value={direcao.direita} >{direcao.direita}</button>
+                            <button className='dropdown-item' type='button' onClick={this.ApontandoDirecao} value={direcao.esquerda} >{direcao.esquerda}</button>
+                            <button className='dropdown-item' type='button' onClick={this.ApontandoDirecao} value={direcao.cima} >{direcao.cima}</button>
+                            <button className='dropdown-item' type='button' onClick={this.ApontandoDirecao} value={direcao.baixo} >{direcao.baixo}</button>
                         </div>
                     </div>
 
