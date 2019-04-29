@@ -5,6 +5,7 @@ const BuscaEmProfundidade = (props) =>
     return (
         <div>
             {props.no.nome}
+            {props.no.ligacao.direita !== undefined && <BuscaEmProfundidade no={props.no.ligacao.direita} />}
          
         </div>
     );
@@ -13,3 +14,4 @@ const BuscaEmProfundidade = (props) =>
 }
 
 export default BuscaEmProfundidade;
+ 

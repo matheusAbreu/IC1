@@ -50,10 +50,10 @@ function no(MyName, lista = new Array()) {
     this.nome = MyName;
     this.listaDeLigamentos = lista;
     this.ligacao = {
-        esq:'',
-        dir:'',
-        cima:'',
-        baixo:''
+        esquerda:undefined,
+        direita:undefined,
+        cima:undefined,
+        baixo:undefined
     };
 
     this.NovoNo = function (newNome) 
@@ -76,17 +76,38 @@ function no(MyName, lista = new Array()) {
     {
         /*var noTemp = new ligamentos(dir, NoLigado);
         this.listaDeLigamentos.push(noTemp);*/
+        switch(dir)
+        {
+            case direcao.direita:
+                this.ligacao.direita= NoLigado;
+            break;
+            case direcao.esquerda:
+                this.ligacao.esquerda= NoLigado;
+            break;
+            case direcao.cima:
+                this.ligacao.cima= NoLigado;
+            break;
+            case direcao.baixo:
+                this.ligacao.baixo= NoLigado;
+            break;
+        }
     }
     this.ImprimaListaDeLigamentos = function () 
     {
         var temp = '';
-        if (this.listaDeLigamentos.length > 0) {
+        /*if (this.listaDeLigamentos.length > 0) {
             for (var i = 0; i < this.listaDeLigamentos.length; i++)
             {
                 temp += this.listaDeLigamentos[i].imprimaLigamento() + '\n|';
             }
             return temp;
-        }
+        }*/
+        temp = 'Direita:' +((this.ligacao.direita !== undefined)?(this.ligacao.direita.nome):('')) +
+            ' Esquerda:' + ((this.ligacao.esquerda !== undefined)?(this.ligacao.esquerda.nome):('')) +
+            ' Cima:' + ((this.ligacao.cima !== undefined)?(this.ligacao.cima.nome):('')) +
+             ' Baixo:' + ((this.ligacao.baixo !== undefined)?(this.ligacao.baixo.nome):(''));
+        
+        return temp;
     }
     this.ImprimaArvoreDeProfundidade = function ()
     {
