@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Aba from './AbasOcultaveis';
 import LittleCard from './LittleCard';
+import BuscaP from './BuscaEmProfundidade';
 
 //enum Direcao  {baixo= 1, esquerda= 2, cima= 3, direita= 4};
 var direcao = { baixo: "Baixo", esquerda: "Esquerda", cima: "Cima", direita: "Direita" };
@@ -53,9 +54,12 @@ function no(MyName, lista = new Array()) {
     {
         this.nome = newNome;
     };
-    this.ProcuraNoNasLigacoes = function (nomeDoNo) {
-        if (this.listaDeLigamentos.length > 0) {
-            for (var i = 0; i < this.listaDeLigamentos.length; i++) {
+    this.ProcuraNoNasLigacoes = function (nomeDoNo) 
+    {
+        if (this.listaDeLigamentos.length > 0) 
+        {
+            for (var i = 0; i < this.listaDeLigamentos.length; i++)
+            {
                 if (this.listaDeLigamentos[i].nome === nomeDoNo)
                     return this.listaDeLigamentos[i];
             }
@@ -67,14 +71,21 @@ function no(MyName, lista = new Array()) {
         var noTemp = new ligamentos(dir, NoLigado);
         this.listaDeLigamentos.push(noTemp);
     }
-    this.ImprimaListaDeLigamentos = function () {
+    this.ImprimaListaDeLigamentos = function () 
+    {
         var temp = '';
         if (this.listaDeLigamentos.length > 0) {
-            for (var i = 0; i < this.listaDeLigamentos.length; i++) {
-                temp += this.listaDeLigamentos[i].imprimaLigamento() + '\n';
+            for (var i = 0; i < this.listaDeLigamentos.length; i++)
+            {
+                temp += this.listaDeLigamentos[i].imprimaLigamento() + '\n|';
             }
             return temp;
         }
+    }
+    this.ImprimaArvoreDeProfundidade = function ()
+    {
+        var temp = '';
+
     }
 }
 function IdentificaDirecaoOposta(dir)
@@ -100,8 +111,8 @@ export default class Grafo extends Component {
             noInicial: '',
             noFinal: '',
             tempDirecao: 'Escolha a Direcao'
-
         };
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleTextChangeNoInicial = this.handleTextChangeNoInicial.bind(this);
         this.handleTextChangeNoFinal = this.handleTextChangeNoFinal.bind(this);
@@ -123,8 +134,7 @@ export default class Grafo extends Component {
                         if(this.state.nos[j].nome === noDois.trim().toUpperCase())
                         {
                             this.state.nos[i].AddLigamento(dir, this.state.nos[j]);
-                            this.state.nos[j].AddLigamento(IdentificaDirecaoOposta(dir), this.state.nos[i]);
-                            
+                            this.state.nos[j].AddLigamento(IdentificaDirecaoOposta(dir), this.state.nos[i]);    
                         }
                     }
                 }
@@ -133,21 +143,7 @@ export default class Grafo extends Component {
     }
     MontandoGrafoAula(e)
     {
-        /* 
-            new no('A'), new no('B'), new no('C'), new no('D'), new no('E'),
-            new no('F'), new no('G'), new no('H'), new no('I'), new no('J'), new no('K'),
-            new no('L'), new no('M'), new no('N'), new no('O'), new no('P'), new no('Q'),
-            new no('R'), new no('S')
         
-       var tempNo;
-       for(var i; i < 19; i++)
-       {
-           //this.state.nos.push(new no(EscrevendoAlfabeto(i+1)));
-           tempNo = new no(EscrevendoAlfabeto(i+1));
-           this.state.nos.push(tempNo);
-       }*/
-       
-       
        this.DuplaLigacao('A', direcao.direita,'e');
        this.DuplaLigacao('e', direcao.direita, 'i');
        this.DuplaLigacao('i', direcao.direita,'n');
@@ -174,6 +170,7 @@ export default class Grafo extends Component {
     }
     handleSubmit(e) {
              
+        
         this.DuplaLigacao(this.state.noInicial, this.state.tempDirecao, this.state.noFinal);
         
         //Limpando o campo text
@@ -230,44 +227,10 @@ export default class Grafo extends Component {
                
                 <Aba title={this.props.title} index={this.state.nos.length} text={this.state.nos.map((nos, index) => {
                         return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()} />
-                    })} style={{marginTop: '1%'}} />
+                    })} style={{marginTop: '1%'}}
+                />
             </div>
         );
     }
 
 };
-
-/*function GeraGrafo(myText)
-{   
-                <Aba title={this.props.title} index={this.state.nos.length} text={this.state.nos.map((nos, index) => {
-                        return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()} />
-                    })} style={{marginTop: '1%'}} />
-    var temp = new no(), myList = [];
-        for(var i = 0; i <10;i++)
-        {
-            temp.noInicial("no" + i.toString());
-            myList.push(temp);
-            myText += "\n";
-            myText += myList[i].nome + "->";
-        }
-        alert(myText);
-}
-
-
-               <div style={{marginTop: '1%'}}>
-                    <ul className='nav nav-tabs' id='myTab' role='tablist'>
-                        <li className='nav-item '>
-                            <a className='nav-link btn btn-outline-primary active' id='grafo-tab' data-toggle='tab' href='#grafo' role='tab' 
-                            aria-controls='div-tab-grafo' onClick={this.OcultandoDivs} aria-selected='true' >{this.title}</a>
-                        </li>
-                    </ul>
-                    <div class='tab-content' id='myTabContent' >    
-                        <div className='tab-pane fade show active' id='div-tab-grafo'  role='tabpanel' aria-labelledby='grafo-tab' >
-                            <div className='row'>
-                                {this.state.nos.map((nos, index) => {
-                                    return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()} />
-                                })}
-                            </div>
-                        </div>
-                    </div>    
-                </div>*/
