@@ -56,7 +56,7 @@ export default class Aba extends Component
                     </div>
                     <div id='BuscaProfun' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='BuscaProfun-tab'>
                         <div className='row'>
-                           {this.props.BuscaP}
+                           <BuscaP no={this.props.BuscaP}/>
                         </div>
                     </div>
                 </div>    

@@ -49,6 +49,12 @@ function ligamentos(dir,passNo) {
 function no(MyName, lista = new Array()) {
     this.nome = MyName;
     this.listaDeLigamentos = lista;
+    this.ligacao = {
+        esq:'',
+        dir:'',
+        cima:'',
+        baixo:''
+    };
 
     this.NovoNo = function (newNome) 
     {
@@ -68,8 +74,8 @@ function no(MyName, lista = new Array()) {
     };
     this.AddLigamento = function (dir, NoLigado) 
     {
-        var noTemp = new ligamentos(dir, NoLigado);
-        this.listaDeLigamentos.push(noTemp);
+        /*var noTemp = new ligamentos(dir, NoLigado);
+        this.listaDeLigamentos.push(noTemp);*/
     }
     this.ImprimaListaDeLigamentos = function () 
     {
@@ -228,6 +234,8 @@ export default class Grafo extends Component {
                 <Aba title={this.props.title} index={this.state.nos.length} text={this.state.nos.map((nos, index) => {
                         return <LittleCard key={index} title={nos.nome} text={nos.ImprimaListaDeLigamentos()} />
                     })} style={{marginTop: '1%'}}
+
+                    BuscaP={this.state.nos[0]}
                 />
             </div>
         );
