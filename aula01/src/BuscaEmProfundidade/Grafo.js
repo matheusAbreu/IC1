@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Aba from './AbasOcultaveis';
 import LittleCard from './LittleCard';
-import BuscaP from './BuscaEmProfundidade';
 
 //enum Direcao  {baixo= 1, esquerda= 2, cima= 3, direita= 4};
 var direcao = { baixo: "Baixo", esquerda: "Esquerda", cima: "Cima", direita: "Direita" };
@@ -37,18 +36,10 @@ function EscrevendoAlfabeto(numDaLetra)
         default: return ""; 
     }
 }
-function ligamentos(dir,passNo) {
-    this.dir = dir;
-    this.no = passNo;
-    this.imprimaLigamento = function () {
-        var temp = this.dir + ':\n' + this.no.nome;
-        return temp;
-    }
-}
 
-function no(MyName, lista = new Array()) {
+
+function no(MyName) {
     this.nome = MyName;
-    this.listaDeLigamentos = lista;
     this.ligacao = {
         esquerda:undefined,
         direita:undefined,
@@ -74,8 +65,6 @@ function no(MyName, lista = new Array()) {
     };
     this.AddLigamento = function (dir, NoLigado) 
     {
-        /*var noTemp = new ligamentos(dir, NoLigado);
-        this.listaDeLigamentos.push(noTemp);*/
         switch(dir)
         {
             case direcao.direita:
@@ -95,24 +84,12 @@ function no(MyName, lista = new Array()) {
     this.ImprimaListaDeLigamentos = function () 
     {
         var temp = '';
-        /*if (this.listaDeLigamentos.length > 0) {
-            for (var i = 0; i < this.listaDeLigamentos.length; i++)
-            {
-                temp += this.listaDeLigamentos[i].imprimaLigamento() + '\n|';
-            }
-            return temp;
-        }*/
         temp = 'Direita:' +((this.ligacao.direita !== undefined)?(this.ligacao.direita.nome):('')) +
             ' Esquerda:' + ((this.ligacao.esquerda !== undefined)?(this.ligacao.esquerda.nome):('')) +
             ' Cima:' + ((this.ligacao.cima !== undefined)?(this.ligacao.cima.nome):('')) +
              ' Baixo:' + ((this.ligacao.baixo !== undefined)?(this.ligacao.baixo.nome):(''));
         
         return temp;
-    }
-    this.ImprimaArvoreDeProfundidade = function ()
-    {
-        var temp = '';
-
     }
 }
 function IdentificaDirecaoOposta(dir)

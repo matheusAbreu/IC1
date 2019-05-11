@@ -6,10 +6,12 @@ export default class BuscaEmProfundidade extends React.Component
     {
         super(props);/*informado na chamada do componente
          result - nome do no que desejado se achado
-         no - o no no qual se encontra
+         no - o no-candidato
          abertos - lista de abertos
          fechados - lista de fechados
         */
+
+        /**Acredito que os nomes estão BEM sugestivos do que cada um faz */
         this.AddListaAbertos = this.AddListaAbertos.bind(this);
         this.RemoveListaAbertos = this.RemoveListaAbertos.bind(this);
         this.AddListaFechados = this.AddListaFechados.bind(this);
@@ -35,11 +37,6 @@ export default class BuscaEmProfundidade extends React.Component
     }
     AddListaAbertos()
     {
-        if(this.props.abertos === undefined)
-        {
-            this.props.abertos = new Array();            
-        }
-
         if(!this.VerificaListaDeFechados(this.props.no.baixo))
         {
             this.props.abertos.push(this.props.no.baixo);
@@ -76,18 +73,12 @@ export default class BuscaEmProfundidade extends React.Component
     }
     AddListaFechados()
     {
-        if(this.props.fechados === undefined)
-        {
-            this.props.fechados = new Array();
-        }
-
         this.props.fechados.push(this.props.no);
-
     }
 
     render()
-    {//Varredura será feita aqui
-
+    {
+        //Aquele teste de nulo que é sempre bom ter
         if(this.props.no === undefined)
         {
             return (
@@ -97,10 +88,17 @@ export default class BuscaEmProfundidade extends React.Component
             );
         }
 
+        /**Comportamento da busca em profundidade em si, nota:
+         * O no-candidato é passado por parametro, o que facilita muita recursividade
+         */
         this.AddListaAbertos();
         this.RemoveListaAbertos();
         this.AddListaFechados();
-        
+
+        /**Caso o resultado:
+         * seja encontrado: verde
+         * caso de erro(tá lá emcima, é  primeiro teste do render): vermelho
+         */
         if(this.props.no.nome === this.props.result ){//||  !this.VerificaListaDeFechados(this.props.no)){
             return(
                 <div>
@@ -111,11 +109,13 @@ export default class BuscaEmProfundidade extends React.Component
         {
             return(
                 <div>
-                    {this.props.no.nome}<br/>
-                    &ensp;{this.VerificaListaDeFechados(this.props.no.ligacao.baixo) === false && this.props.no.ligacao.baixo !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.baixo} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    &ensp;{!this.VerificaListaDeFechados(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.esquerda} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    &ensp;{this.VerificaListaDeFechados(this.props.no.ligacao.cima) === false && this.props.no.ligacao.cima !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.cima} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    &ensp;{!this.VerificaListaDeFechados(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.direita} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
+                    <p style={{color:'black'}}>{this.props.no.nome}</p>
+                        
+                    <br/>
+                    {this.VerificaListaDeFechados(this.props.no.ligacao.baixo) === false && this.props.no.ligacao.baixo !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.baixo} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
+                    {!this.VerificaListaDeFechados(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.esquerda} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
+                    {this.VerificaListaDeFechados(this.props.no.ligacao.cima) === false && this.props.no.ligacao.cima !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.cima} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
+                    {!this.VerificaListaDeFechados(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.direita} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
                     
                 </div>
             );
@@ -124,14 +124,3 @@ export default class BuscaEmProfundidade extends React.Component
 
 
 }
- /** 
-  * &ensp;{!this.VerificaListaDeFechados(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.esquerda} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-  * &ensp;{!this.VerificaListaDeFechados(this.props.no.ligacao.cima) && this.props.no.ligacao.cima !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.cima} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    &ensp;{!this.VerificaListaDeFechados(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.direita} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    
-  * <div>
-        {this.props.no.nome}
-        {this.props.no.ligacao.direita !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.direita} />}
-        
-    </div>
-    */
