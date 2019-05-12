@@ -75,6 +75,7 @@ export default class BuscaEmProfundidade extends React.Component
     {
         this.props.fechados.push(this.props.no);
     }
+    
 
     render()
     {
@@ -99,23 +100,31 @@ export default class BuscaEmProfundidade extends React.Component
          * seja encontrado: verde
          * caso de erro(tá lá emcima, é  primeiro teste do render): vermelho
          */
-        if(this.props.no.nome === this.props.result ){//||  !this.VerificaListaDeFechados(this.props.no)){
+        if(this.props.no.nome === this.props.result )
+        {
             return(
                 <div>
-                    <h2 style={{color:'green'}}>{this.props.no.nome}</h2>
+                    <h2 style={{color:'green',height:'2rem'}}>{this.props.no.nome}</h2>
                 </div>
             );
         }else
         {
             return(
-                <div>
+                <div className='col-1' style={{height:'1rem'}}>
                     <p style={{color:'black'}}>{this.props.no.nome}</p>
                         
                     <br/>
-                    {this.VerificaListaDeFechados(this.props.no.ligacao.baixo) === false && this.props.no.ligacao.baixo !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.baixo} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    {!this.VerificaListaDeFechados(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.esquerda} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    {this.VerificaListaDeFechados(this.props.no.ligacao.cima) === false && this.props.no.ligacao.cima !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.cima} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
-                    {!this.VerificaListaDeFechados(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined && <BuscaEmProfundidade no={this.props.no.ligacao.direita} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
+                    {!this.VerificaListaDeFechados(this.props.no.ligacao.baixo) && this.props.no.ligacao.baixo !== undefined && 
+                    <BuscaEmProfundidade no={this.props.no.ligacao.baixo} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result} />}
+
+                    {!this.VerificaListaDeFechados(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined && 
+                    <BuscaEmProfundidade no={this.props.no.ligacao.esquerda} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result} />}
+
+                    {!this.VerificaListaDeFechados(this.props.no.ligacao.cima) && this.props.no.ligacao.cima !== undefined &&
+                    <BuscaEmProfundidade no={this.props.no.ligacao.cima} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>}
+
+                    {!this.VerificaListaDeFechados(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined && 
+                    <BuscaEmProfundidade no={this.props.no.ligacao.direita} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result} />}
                     
                 </div>
             );

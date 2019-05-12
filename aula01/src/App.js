@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import logo from './logo.svg';
 import './App.css';
-import Grafo from './BuscaEmProfundidade/Grafo';
+import Grafo from './Buscas/Grafo';
 import { symlinkSync } from 'fs';
 
 class App extends Component {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import BuscaP from './BuscaEmProfundidade';
+import Backtracking from './Backtracking';
 
-var DivState = {open: "Aberta", closed:"Fechada"};
+var DivState = {grafo:'Grafo-tab', BuscaP:'BuscaProfun-tab', Back:'Backtracking-tab'};
 
 export default class Aba extends Component
 {
@@ -11,7 +12,7 @@ export default class Aba extends Component
         this.title = props.title;
         this.index = props.index;
         this.state = {divClass: 'tab-pane fade show active', 
-                        estadoDiv: DivState.open,
+                        estadoDiv: DivState.grafo,
                     };
 
         this.OcultandoDivs = this.OcultandoDivs.bind(this);
@@ -20,18 +21,21 @@ export default class Aba extends Component
     {
         if(this.index > 1)
         {
-            if(this.state.estadoDiv === DivState.closed)
+            switch(e.target.ID)
             {
-                this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.open});
-                e.target.className = 'nav-link btn btn-outline-primary active';
+                case(DivState.grafo):
+                    this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.grafo});
+                break;
+
+                case(DivState.BuscaP):
+                    this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.BuscaP});
+                break;
+
+                case(DivState.Back):
+                    this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.Back});
+                break;
             }
-            else
-            {
-                this.setState({divClass: 'tab-pane fade hidden', estadoDiv:DivState.closed});
-                e.target.className = 'nav-link btn btn-outline-primary';
-            }
-        }else
-        {e.target.className = 'nav-link btn btn-outline-primary';}
+        }
     }
     render()
     {
@@ -44,9 +48,12 @@ export default class Aba extends Component
                     </li>
                     <li className='nav-item '>
                         <a className='nav-link btn btn-outline-primary' id='BuscaProfun-tab' data-toggle='tab' href='#BuscaProfun' role='tab' 
-                        aria-controls='BuscaProfun' onClick={this.OcultandoDivs} aria-selected='true' >BuscaEmProfundidade</a>
+                        aria-controls='BuscaProfun' onClick={this.OcultandoDivs} aria-selected='true' >BuscaEmProfun</a>
                     </li>
-                    
+                    <li className='nav-item '>
+                        <a className='nav-link btn btn-outline-primary' id='Backtracking-tab' data-toggle='tab' href='#Backtracking' role='tab' 
+                        aria-controls='Backtracking' onClick={this.OcultandoDivs} aria-selected='true' >Backtracking</a>
+                    </li>
                 </ul>
                 <div className='tab-content' id='myTabContent' >    
                     <div id='div-tab-grafo'  className={this.state.divClass} role='tabpanel' aria-labelledby='grafo-tab' >
@@ -56,7 +63,12 @@ export default class Aba extends Component
                     </div>
                     <div id='BuscaProfun' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='BuscaProfun-tab'>
                         <div className='row'>
-                           <BuscaP no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'}/>
+                           <BuscaP no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
+                        </div>
+                    </div>
+                    <div id='Backtracking' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Backtraking-tab'>
+                        <div className='row'>
+                           <Backtracking />
                         </div>
                     </div>
                 </div>    
