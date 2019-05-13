@@ -147,24 +147,24 @@ export default class Grafo extends Component {
     }
     MontandoGrafoAula(e)
     {
-        
        this.DuplaLigacao('A', direcao.direita,'e');
-       this.DuplaLigacao('e', direcao.direita, 'i');
-       this.DuplaLigacao('i', direcao.direita,'n');
-       this.DuplaLigacao('i', direcao.baixo, 'j');
-       this.DuplaLigacao('j', direcao.direita, 'o');
-       this.DuplaLigacao('o', direcao.direita, 'r');
-       this.DuplaLigacao('o', direcao.baixo, 'p');
-       this.DuplaLigacao('p', direcao.direita, 's');
-       this.DuplaLigacao('p', direcao.baixo, 'q');
-       this.DuplaLigacao('q', direcao.esquerda, 'm');
-       this.DuplaLigacao('m', direcao.cima, 'l');
-       this.DuplaLigacao('l', direcao.esquerda, 'g');
        this.DuplaLigacao('a', direcao.baixo,'B');
        this.DuplaLigacao('b', direcao.baixo, 'c');
        this.DuplaLigacao('b', direcao.direita, 'f');
+       this.DuplaLigacao('g', direcao.cima, 'f');
+       this.DuplaLigacao('l', direcao.esquerda, 'g');
        this.DuplaLigacao('g', direcao.baixo, 'h');
        this.DuplaLigacao('h', direcao.esquerda, 'd');
+       this.DuplaLigacao('q', direcao.esquerda, 'm');
+       this.DuplaLigacao('m', direcao.cima, 'l');
+       this.DuplaLigacao('p', direcao.direita, 's');
+       this.DuplaLigacao('p', direcao.baixo, 'q');
+       this.DuplaLigacao('o', direcao.baixo, 'p');
+       this.DuplaLigacao('j', direcao.direita, 'o');
+       this.DuplaLigacao('o', direcao.direita, 'r');
+       this.DuplaLigacao('e', direcao.direita, 'i');
+       this.DuplaLigacao('i', direcao.direita,'n');
+       this.DuplaLigacao('i', direcao.baixo, 'j');
        this.setState({... this.state.nos});
     }
     

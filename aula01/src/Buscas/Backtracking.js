@@ -47,7 +47,10 @@ export default class Backtracking extends React.Component
         if(encontro)
             lista.pull();
     }
-    VerificaListaDeFechados(){}
+    VerificaListaDeFechados()
+    {
+        
+    }
     render()
     {
         return(
