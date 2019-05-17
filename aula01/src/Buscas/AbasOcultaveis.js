@@ -63,7 +63,7 @@ export default class Aba extends Component
                     </div>
                     <div id='BuscaProfun' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='BuscaProfun-tab'>
                         <div className='row'>
-                           <BuscaP no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
+                           <BuscaP no={this.props.BuscaP} abertos={[this.props.BuscaP]} fechados={[]} result={'S'} />
                         </div>
                     </div>
                     <div id='Backtracking' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Backtraking-tab'>
