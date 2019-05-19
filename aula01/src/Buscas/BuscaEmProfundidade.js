@@ -203,7 +203,7 @@ export default class BuscaEmProfundidade extends React.Component
         }
         else if(this.EvitandoDivorcio())
         {
-            this.AddFilhosListaFechados();
+            //this.AddFilhosListaFechados();
             return(
                 <div>
                 <p style={{color:'black'}}>{this.props.no.nome}-> ({this.props.abertos.length})</p>
