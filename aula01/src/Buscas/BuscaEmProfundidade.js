@@ -111,7 +111,10 @@ export default class BuscaEmProfundidade extends React.Component
     }
     VerificarListas(noProcurado)
     {
-        return ( this.VerificarListaAbertos(noProcurado) || this.VerificarListaDeFechados(noProcurado));
+        if(noProcurado !== undefined)
+            return ( this.VerificarListaAbertos(noProcurado) || this.VerificarListaDeFechados(noProcurado));
+        else
+            return false;
     }
     AddListaAbertos()
     {

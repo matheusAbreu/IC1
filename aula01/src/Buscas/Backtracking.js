@@ -16,6 +16,7 @@ export default class Backtracking extends React.Component
         this.RemoveListaAbertos = this.RemoveListaAbertos.bind(this);
         this.AddListaFechados = this.AddListaFechados.bind(this);
         this.VerificarListaAbertos = this.VerificarListaAbertos.bind(this);
+        this.VerificarListas = this.VerificarListas.bind(this);
         this.VerificaListaDeFechados = this.VerificaListaDeFechados.bind(this);
         this.VerificarListaDeFechadosPeloNome = this.VerificarListaDeFechadosPeloNome.bind(this);
         this.EvitandoDivorcio = this.EvitandoDivorcio.bind(this);
@@ -107,23 +108,30 @@ export default class Backtracking extends React.Component
             return false;
         }
     }
+    VerificarListas(noProcurado)
+    {
+        if(noProcurado !== undefined)
+            return ( this.VerificarListaAbertos(noProcurado) || this.VerificarListaDeFechados(noProcurado));
+        else
+            return false;
+    }
     AddListaAbertos()
     {
-        if(!this.VerificaListaDeFechados(this.props.no.baixo))
+        if(!this.VerificarListas(this.props.no.ligacao.baixo) && this.props.no.ligacao.baixo !== undefined)
         {
-            this.props.abertos.push(this.props.no.baixo);
+            this.props.abertos.push(this.props.no.ligacao.baixo);
         }
-        if(!this.VerificaListaDeFechados(this.props.no.esquerda))
+        if(!this.VerificarListas(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined)
         {
-            this.props.abertos.push(this.props.no.esquerda);
+            this.props.abertos.push(this.props.no.ligacao.esquerda);
         }
-        if(!this.VerificaListaDeFechados(this.props.no.cima))
+        if(!this.VerificarListas(this.props.no.ligacao.cima) && this.props.no.ligacao.cima !== undefined)
         {
-            this.props.abertos.push(this.props.no.cima);
+            this.props.abertos.push(this.props.no.ligacao.cima);
         }
-        if(!this.VerificaListaDeFechados(this.props.no.direita))
+        if(!this.VerificarListas(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined)
         {
-            this.props.abertos.push(this.props.no.direita);
+            this.props.abertos.push(this.props.no.ligacao.direita);
         }
     }
     RemoveListaAbertos()
