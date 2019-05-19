@@ -22,7 +22,9 @@ export default class BuscaEmProfundidade extends React.Component
         this.AddFilhosListaFechados = this.AddFilhosListaFechados.bind(this);
     }
     EvitandoDivorcio()
-    {
+    {/** Está função procura no em questão se algum de seus filhos é solução
+        Caso seja: true(Um filho solução, resolve qualquer problema)
+        Caso não: nem case, continue procurando*/
         if(this.props.no.ligacao.baixo !== undefined)
         {
             if(this.props.result === this.props.no.ligacao.baixo.nome)
@@ -133,20 +135,7 @@ export default class BuscaEmProfundidade extends React.Component
     }
     RemoveListaAbertos()
     {
-        /*var encontro = false;
-        if(this.props.abertos !== undefined)
-        {
-            for(var i=this.props.abertos.length; i > 0 ;i--)
-            {
-                if(this.props.abertos[i] === this.props.no)
-                    encontro = true;
-
-                if(encontro)
-                    this.props.abertos[i] = this.props.abertos[i+1];
-            }
-        }   
-        if(encontro)*/
-            this.props.abertos.pop();
+        this.props.abertos.pop();
     }
     AddListaFechados()
     {

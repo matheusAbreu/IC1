@@ -15,7 +15,44 @@ export default class Backtracking extends React.Component
         this.AddListaAbertos = this.AddListaAbertos.bind(this);
         this.RemoveListaAbertos = this.RemoveListaAbertos.bind(this);
         this.AddListaFechados = this.AddListaFechados.bind(this);
+        this.VerificarListaAbertos = this.VerificarListaAbertos.bind(this);
         this.VerificaListaDeFechados = this.VerificaListaDeFechados.bind(this);
+        this.VerificarListaDeFechadosPeloNome = this.VerificarListaDeFechadosPeloNome.bind(this);
+        this.EvitandoDivorcio = this.EvitandoDivorcio.bind(this);
+    }
+    EvitandoDivorcio()
+    {/** Está função procura no no em questão se algum de seus filhos é solução
+        Caso seja: true(Um filho solução, resolve qualquer problema)
+        Caso não: nem case, continue procurando*/
+        if(this.props.no.ligacao.baixo !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.baixo.nome)
+            {
+                return true;
+            }
+        }
+        if(this.props.no.ligacao.esquerda !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.esquerda.nome)
+            {
+                return true;
+            }
+        }
+        if(this.props.no.ligacao.cima !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.cima.nome)
+            {
+                return true;
+            }
+        }
+        if(this.props.no.ligacao.direita !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.direita.nome)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     VerificaListaDeFechados(noProcurado)
     {/** Retorna verdadeiro caso o nó seja encontrado
@@ -31,6 +68,41 @@ export default class Backtracking extends React.Component
             {
                 if(this.props.fechados[i] === noProcurado)
                     return true;
+            }
+            return false;
+        }
+    }
+    VerificarListaDeFechadosPeloNome(noProcurado)
+    {/** Retorna verdadeiro caso o nó seja encontrado
+        e falso caso não
+        */
+        if(this.props.fechados === undefined)
+        {
+            return false;
+        }
+        else
+        {
+            for(var i=0;i< this.props.fechados.length;i++)
+            {
+                if(this.props.fechados[i].nome.trim().toUpperCase() === noProcurado.trim().toUpperCase())
+                    return true;
+            }
+            return false;
+        }
+    }
+    VerificarListaAbertos(noProcurado)
+    {
+        if(this.props.abertos === undefined)
+        {
+            return false;
+        }
+        else
+        {
+            for(var i=0;i< this.props.abertos.length;i++)
+            {
+                if(this.props.abertos[i] === noProcurado)
+                    return true;
+                    
             }
             return false;
         }
@@ -56,30 +128,27 @@ export default class Backtracking extends React.Component
     }
     RemoveListaAbertos()
     {
-        var encontro =false;
-        if(this.props.abertos !== undefined)
-        {
-            for(var i=this.props.abertos.length; i > 0 ;i--)
-            {
-                if(this.props.abertos[i] === this.props.no)
-                    encontro = true;
-
-                if(encontro)
-                    this.props.abertos[i] = this.props.abertos[i+1];
-            }
-        }   
-        if(encontro)
-            this.props.abertos.pull();
+        this.props.abertos.pop();
     }
     AddListaFechados()
     {
-        this.props.fechados.push(this.props.no);
+        this.props.fechados.unshift(this.props.no);
     }
     render()
     {
+        //Aquele teste de nulo que é sempre bom ter
+        if(this.props.no === undefined)
+        {
+            return (
+                <div>
+                    <p style={{color:'red'}}>Houve um Erro, o no veio vazio, busca Interrompida!</p>
+                </div>
+            );
+        }
         this.AddListaAbertos();
         this.RemoveListaAbertos();
         this.AddListaFechados();
+
         return(
             <div>
             <p style={{color:'black'}}>{this.props.no.nome}-> ({this.props.abertos.length})</p>
