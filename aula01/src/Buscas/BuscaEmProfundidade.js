@@ -203,7 +203,7 @@ export default class BuscaEmProfundidade extends React.Component
         }
         else if(this.EvitandoDivorcio())
         {
-            //this.AddFilhosListaFechados();
+            this.AddFilhosListaFechados();
             return(
                 <div>
                 <p style={{color:'black'}}>{this.props.no.nome}-> ({this.props.abertos.length})</p>
@@ -217,12 +217,12 @@ export default class BuscaEmProfundidade extends React.Component
                         </td>
                         <td>
                             <tr><div>2:{this.props.no.ligacao.esquerda === undefined && <p style={{color:'red'}}>nulo</p>}
-                            {this.props.no.ligacao.esquerda !== undefined && this.props.no.ligacao.esquerda.nome}</div>
+                            { this.props.no.ligacao.esquerda !== undefined && this.props.no.ligacao.esquerda.nome}</div>
                             </tr>
                         </td>
                         <td>
                             <tr><div>3:{this.props.no.ligacao.cima === undefined && <p style={{color:'red'}}>nulo</p>}
-                            {this.props.no.ligacao.cima !== undefined && this.props.no.ligacao.cima.nome}</div>
+                            { this.props.no.ligacao.cima !== undefined && this.props.no.ligacao.cima.nome}</div>
                             </tr>
                         </td>
                         <td>
