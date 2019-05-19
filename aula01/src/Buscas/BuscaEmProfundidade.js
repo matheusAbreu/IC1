@@ -19,20 +19,39 @@ export default class BuscaEmProfundidade extends React.Component
         this.VerificarListaDeFechados = this.VerificarListaDeFechados.bind(this);
         this.VerificarListaDeFechadosPeloNome = this.VerificarListaDeFechadosPeloNome.bind(this);
         this.EvitandoDivorcio = this.EvitandoDivorcio.bind(this);
+        this.AddFilhosListaFechados = this.AddFilhosListaFechados.bind(this);
     }
     EvitandoDivorcio()
     {
-        if(this.props.result === this.props.no.ligacao.baixo ||
-            this.props.result === this.props.no.ligacao.esquerda ||
-            this.props.result === this.props.no.ligacao.cima ||
-            this.props.result === this.props.no.ligacao.direita)
+        if(this.props.no.ligacao.baixo !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.baixo.nome)
             {
                 return true;
             }
-            else
+        }
+        if(this.props.no.ligacao.esquerda !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.esquerda.nome)
             {
-                return false;
+                return true;
             }
+        }
+        if(this.props.no.ligacao.cima !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.cima.nome)
+            {
+                return true;
+            }
+        }
+        if(this.props.no.ligacao.direita !== undefined)
+        {
+            if(this.props.result === this.props.no.ligacao.direita.nome)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     VerificarListaAbertos(noProcurado)
     {
@@ -133,7 +152,25 @@ export default class BuscaEmProfundidade extends React.Component
     {
         this.props.fechados.unshift(this.props.no);
     }
-    
+    AddFilhosListaFechados()
+    {
+        if(this.props.no.ligacao.baixo !== undefined)
+        {
+            this.props.fechados.unshift(this.props.no.ligacao.baixo);
+        }
+        if(this.props.no.ligacao.esquerda !== undefined)
+        {
+            this.props.fechados.unshift(this.props.no.ligacao.esquerda);
+        }
+        if(this.props.no.ligacao.cima !== undefined)
+        {
+            this.props.fechados.unshift(this.props.no.ligacao.cima);
+        }
+        if(this.props.no.ligacao.direita !== undefined)
+        {
+            this.props.fechados.unshift(this.props.no.ligacao.direita);
+        }
+    }
 
     render()
     {
@@ -154,27 +191,19 @@ export default class BuscaEmProfundidade extends React.Component
         this.RemoveListaAbertos();
         this.AddListaFechados();
         this.AddListaAbertos();
-        
 
-        
         /**Caso o resultado:
          * seja encontrado: verde
          * caso de erro(tá lá emcima, é  primeiro teste do render): vermelho
          */
-        if(this.props.no.nome === this.props.result )
-        {
-            return(
-                <div>
-                    <h5 style={{color:'green',height:'2rem'}}>{this.props.no.nome} -> ({this.props.abertos.length})</h5>
-                </div>
-            );
-        }
-        else if(this.VerificarListaDeFechadosPeloNome(this.props.result))
+        
+        if(this.VerificarListaDeFechadosPeloNome(this.props.result))
         {
             return (<div></div>);
         }
         else if(this.EvitandoDivorcio())
         {
+            this.AddFilhosListaFechados();
             return(
                 <div>
                 <p style={{color:'black'}}>{this.props.no.nome}-> ({this.props.abertos.length})</p>
@@ -182,23 +211,23 @@ export default class BuscaEmProfundidade extends React.Component
                 <div>
                     <table >
                         <td>
-                            <tr>1{this.props.no.ligacao.baixo === undefined && <p style={{color:'red'}}>erro</p>}
-                                {this.props.no.ligacao.baixo !== undefined && this.props.no.ligacao.baixo.nome}
+                            <tr><div>1:{this.props.no.ligacao.baixo === undefined && <p style={{color:'red'}}>nulo</p>}
+                                {this.props.no.ligacao.baixo !== undefined && this.props.no.ligacao.baixo.nome}</div>
                             </tr>
                         </td>
                         <td>
-                            <tr>2{this.props.no.ligacao.esquerda === undefined && <p style={{color:'red'}}>erro</p>}
-                            {this.props.no.ligacao.esquerda !== undefined && this.props.no.ligacao.esquerda.nome}
+                            <tr><div>2:{this.props.no.ligacao.esquerda === undefined && <p style={{color:'red'}}>nulo</p>}
+                            {this.props.no.ligacao.esquerda !== undefined && this.props.no.ligacao.esquerda.nome}</div>
                             </tr>
                         </td>
                         <td>
-                            <tr>3{this.props.no.ligacao.cima === undefined && <p style={{color:'red'}}>erro</p>}
-                            {this.props.no.ligacao.cima !== undefined && this.props.no.ligacao.cima.nome}
+                            <tr><div>3:{this.props.no.ligacao.cima === undefined && <p style={{color:'red'}}>nulo</p>}
+                            {this.props.no.ligacao.cima !== undefined && this.props.no.ligacao.cima.nome}</div>
                             </tr>
                         </td>
                         <td>
-                            <tr>4{this.props.no.ligacao.direita === undefined && <p style={{color:'red'}}>erro</p>}
-                            {this.props.no.ligacao.direita !== undefined && this.props.no.ligacao.direita.nome}
+                            <tr><div>4:{this.props.no.ligacao.direita === undefined && <p style={{color:'red'}}>nulo</p>}
+                            {this.props.no.ligacao.direita !== undefined && this.props.no.ligacao.direita.nome}</div>
                             </tr>
                         </td>
                     </table>
@@ -216,25 +245,25 @@ export default class BuscaEmProfundidade extends React.Component
                     <div>
                         <table >
                             <td>
-                                <tr>1{this.props.no.ligacao.baixo === undefined && <p style={{color:'red'}}>erro</p>}
+                                <tr>1{this.props.no.ligacao.baixo === undefined && <p style={{color:'red'}}>nulo</p>}
                                     {this.VerificarListaAbertos(this.props.no.ligacao.baixo) && !this.VerificarListaDeFechados(this.props.no.ligacao.baixo) && this.props.no.ligacao.baixo !== undefined && 
                                     <BuscaEmProfundidade no={this.props.no.ligacao.baixo} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result} />}
                                 </tr>
                             </td>
                             <td>
-                                <tr>2{this.props.no.ligacao.esquerda === undefined && <p style={{color:'red'}}>erro</p>}
+                                <tr>2{this.props.no.ligacao.esquerda === undefined && <p style={{color:'red'}}>nulo</p>}
                                     {this.VerificarListaAbertos(this.props.no.ligacao.esquerda) && !this.VerificarListaDeFechados(this.props.no.ligacao.esquerda) && this.props.no.ligacao.esquerda !== undefined && 
                                     <BuscaEmProfundidade no={this.props.no.ligacao.esquerda} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result} />}
                                 </tr>
                             </td>
                             <td>
-                                <tr>3{this.props.no.ligacao.cima === undefined && <p style={{color:'red'}}>erro</p>}
+                                <tr>3{this.props.no.ligacao.cima === undefined && <p style={{color:'red'}}>nulo</p>}
                                     {this.VerificarListaAbertos(this.props.no.ligacao.cima) && !this.VerificarListaDeFechados(this.props.no.ligacao.cima) && this.props.no.ligacao.cima !== undefined &&
                                     <BuscaEmProfundidade no={this.props.no.ligacao.cima} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result}/>}
                                 </tr>
                             </td>
                             <td>
-                                <tr>4{this.props.no.ligacao.direita === undefined && <p style={{color:'red'}}>erro</p>}
+                                <tr>4{this.props.no.ligacao.direita === undefined && <p style={{color:'red'}}>nulo</p>}
                                      {this.VerificarListaAbertos(this.props.no.ligacao.direita) && !this.VerificarListaDeFechados(this.props.no.ligacao.direita) && this.props.no.ligacao.direita !== undefined && 
                                     <BuscaEmProfundidade no={this.props.no.ligacao.direita} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result} />}
                                 </tr>
