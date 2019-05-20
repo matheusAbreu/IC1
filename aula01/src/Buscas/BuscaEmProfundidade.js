@@ -232,7 +232,7 @@ export default class BuscaEmProfundidade extends React.Component
         {
             return(
                 <div>
-                    <p style={{color:'black'}}>{this.props.no.nome}-> ({this.props.abertos.length})</p>
+                    <p style={{color:'black'}}>{this.props.no.nome}</p>
 
                     <div>
                         <table >
@@ -268,4 +268,3 @@ export default class BuscaEmProfundidade extends React.Component
         }
     } 
 }
-/** */

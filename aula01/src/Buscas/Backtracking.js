@@ -62,7 +62,7 @@ export default class Backtracking extends BuscaP
             return (<div></div>);
         }else
         {
-            alert(this.props.no.nome);
+            //alert(this.props.no.nome);
         return(
                 <div>
                     <p style={{color:'black'}}>{this.props.no.nome}</p>
