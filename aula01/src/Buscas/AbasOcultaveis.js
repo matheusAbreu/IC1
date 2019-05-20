@@ -3,7 +3,7 @@ import BuscaP from './BuscaEmProfundidade';
 import Backtracking from './Backtracking';
 import Largura from './Largura';
 
-var DivState = {grafo:'Grafo-tab', BuscaP:'BuscaProfun-tab', Back:'Backtracking-tab', Larg:'Largura-tab'};
+var DivState = {grafo:'Grafo-tab', BuscaP:'Profundidade-tab', Back:'Backtracking-tab', Larg:'Largura-tab'};
 
 export default class Aba extends Component
 {
@@ -52,8 +52,8 @@ export default class Aba extends Component
                         aria-controls='div-tab-grafo' onClick={this.OcultandoDivs} aria-selected='true' >{this.title}</a>
                     </li>
                     <li className='nav-item '>
-                        <a className='nav-link btn btn-outline-primary' id='BuscaProfun-tab' data-toggle='tab' href='#BuscaProfun' role='tab' 
-                        aria-controls='BuscaProfun' onClick={this.OcultandoDivs} aria-selected='true' >BuscaEmProfun</a>
+                        <a className='nav-link btn btn-outline-primary' id='Profundidade-tab' data-toggle='tab' href='#Profundidade' role='tab' 
+                        aria-controls='Profundidade' onClick={this.OcultandoDivs} aria-selected='true' >BuscaEmProfun</a>
                     </li>
                     <li className='nav-item '>
                         <a className='nav-link btn btn-outline-primary' id='Backtracking-tab' data-toggle='tab' href='#Backtracking' role='tab' 
@@ -70,7 +70,7 @@ export default class Aba extends Component
                             {this.props.text}
                         </div>
                     </div>
-                    <div id='BuscaProfun' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='BuscaProfun-tab'>
+                    <div id='Profundidade' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Profundidade-tab'>
                         <div className='row'>
                            <BuscaP no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
                         </div>
@@ -81,7 +81,7 @@ export default class Aba extends Component
                         </div>
                     </div>
                     <div id='Largura' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Largura-tab'>
-                        <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
+                            <Largura no={this.props.BuscaP} abertos={[this.props.BuscaP]} fechados={[]} result={'S'} />
                     </div>
                 </div>    
             </div>
