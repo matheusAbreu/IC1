@@ -1,12 +1,84 @@
 import React from 'react';
 import BuscaP from './BuscaEmProfundidade';
 
+function treeForDraw(noCabeca)
+{
+    this.item = noCabeca;
+    this.ligacaoDaArvore = [];
+    this.filaDeProx = [];
+    this.listaDeFech = [];
 
+
+    this.VerificarFilaDeProx = function (item)
+    {
+        /**Se o item estiver na lista ele retorna verdadeiro, caso contrario, não */
+        if(this.filaDeProx.length === 0)
+        {
+            return false;
+        }
+        else
+        {
+            for(var i = 0; i < this.filaDeProx.length; i++)
+            {
+                if(this.filaDeProx[i] === item)
+                    return true;
+            }
+            return false;
+        }
+    }
+    this.VerificarListaDeFech = function (item)
+    {
+        /**Se o item estiver na lista ele retorna verdadeiro, caso contrario, não */
+        if(this.listaDeFech.length === 0)
+        {
+            return false;
+        }
+        else
+        {
+            for(var i = 0; i < this.listaDeFech.length; i++)
+            {
+                if(this.listaDeFech[i] === item)
+                    return true;
+            }
+            return false;
+        }
+    }
+    this.VerifListas = function (item)
+    {
+        return (this.VerificarFilaDeProx(item) || this.VerificarListaDeFech(item));
+    }
+    this.AddFilaDeProx = function(item)
+    {
+        if(!this.VerifListas(item))
+        {
+            this.filaDeProx.push(item);
+        }
+    }
+    this.AddListaDeFech = function (item)
+    {
+        if(this.VerificarListaDeFech(item))
+        {
+            this.listaDeFech.push(item);
+        }
+    }
+    this.RemoveFilaDeProx = function ()
+    {
+        var temp = this.filaDeProx.shift();
+
+        this.AddFilhosListaFechados(temp);
+    }
+    this.MontarArvore = function()
+    {}
+    this.imprimirArv = function()
+    {}
+}
 export default class Largura extends BuscaP
 {
     constructor(props)
     {
         super(props);
+        this.myTree = new treeForDraw(props.no);
+
     }
     render()
     {
