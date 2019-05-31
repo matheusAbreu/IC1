@@ -21,7 +21,29 @@ export default class Largura extends BuscaP
         this.MontarArvore = this.MontarArvore.bind(this);
         this.RemovendoEspecificoAbertos = this.RemovendoEspecificoAbertos.bind(this);
         this.ImprimindoArvore = this.ImprimindoArvore.bind(this);
-        
+        this.ProcurandoNoMyTree = this.ProcurandoNoMyTree.bind(this);
+    }
+    ProcurandoNoMyTree(inicioTree, noProcurado)//Recebe um nó "normal"(O da estrutura Grafo.js) e retorna um treeForDraw
+    {//inicioTree:treeForDraw; noProcurado:Grafos.no
+        if(noProcurado === inicioTree.item)
+        {
+            return inicioTree;
+        }
+        else
+        {
+            if(inicioTree.baixo !== undefined)
+            {return this.ProcurandoNoMyTree(inicioTree.baixo, noProcurado);}
+
+            if(inicioTree.esquerda !== undefined)
+            {return this.ProcurandoNoMyTree(inicioTree.esquerda, noProcurado);}
+
+            if(inicioTree.cima !== undefined)
+            {return this.ProcurandoNoMyTree(inicioTree.cima, noProcurado);}
+
+            if(inicioTree.direita !== undefined)
+            {return this.ProcurandoNoMyTree(inicioTree.direita, noProcurado);}
+        }
+        return null;
     }
     RemovendoEspecificoAbertos(item)
     {
@@ -42,58 +64,56 @@ export default class Largura extends BuscaP
         if(encontrou)
         this.props.abertos.shift();
     }
-    MontarArvore(noGrafo)
+    MontarArvore(noArv, noGrafo, resultEncontrado)
     {
-        var noArv = this.myTree;
-        
-            if(noGrafo.ligacao.baixo !== undefined)
+        if(!resultEncontrado)
             {
-                if(!this.VerificarListas(noGrafo.ligacao.baixo))
+                if(noGrafo.ligacao.baixo !== undefined)
                 {
-                    noArv.ligacaoDaArvore.baixo =  new treeForDraw(noGrafo.ligacao.baixo);
-                    this.props.abertos.push(noGrafo.ligacao.baixo);
+                    if(!this.VerificarListas(noGrafo.ligacao.baixo))
+                    {
+                        noArv.ligacaoDaArvore.baixo =  new treeForDraw(noGrafo.ligacao.baixo);
+                        this.props.abertos.push(noGrafo.ligacao.baixo);
+                    }
                 }
-            }
-            
-            if(noGrafo.ligacao.esquerda !== undefined)
-            {
-                if(!this.VerificarListas(noGrafo.ligacao.esquerda))
+                
+                if(noGrafo.ligacao.esquerda !== undefined)
                 {
-                    noArv.ligacaoDaArvore.esquerda =  new treeForDraw(noGrafo.ligacao.esquerda);
-                    this.props.abertos.push(noGrafo.ligacao.esquerda);
+                    if(!this.VerificarListas(noGrafo.ligacao.esquerda))
+                    {
+                        noArv.ligacaoDaArvore.esquerda =  new treeForDraw(noGrafo.ligacao.esquerda);
+                        this.props.abertos.push(noGrafo.ligacao.esquerda);
+                    }
                 }
-            }
 
-            if(noGrafo.ligacao.cima !== undefined)
-            {
-                if(!this.VerificarListas(noGrafo.ligacao.cima))
+                if(noGrafo.ligacao.cima !== undefined)
                 {
-                    noArv.ligacaoDaArvore.cima =  new treeForDraw(noGrafo.ligacao.cima);
-                    this.props.abertos.push(noGrafo.ligacao.cima);
-                }                
-            }
+                    if(!this.VerificarListas(noGrafo.ligacao.cima))
+                    {
+                        noArv.ligacaoDaArvore.cima =  new treeForDraw(noGrafo.ligacao.cima);
+                        this.props.abertos.push(noGrafo.ligacao.cima);
+                    }                
+                }
 
-            if(noGrafo.ligacao.direita !== undefined)
-            {   
-                if(!this.VerificarListas(noGrafo.ligacao.direita))
-                {
-                    noArv.ligacaoDaArvore.direita =  new treeForDraw(noGrafo.ligacao.direita);
-                    this.props.abertos.push(noGrafo.ligacao.direita);
+                if(noGrafo.ligacao.direita !== undefined)
+                {   
+                    if(!this.VerificarListas(noGrafo.ligacao.direita))
+                    {
+                        noArv.ligacaoDaArvore.direita =  new treeForDraw(noGrafo.ligacao.direita);
+                        this.props.abertos.push(noGrafo.ligacao.direita);
+                    }
                 }
             }
             this.props.fechados.push(noGrafo);
-            //this.props.abertos.shift();
             this.props.abertos.shift();
-            /**
+            
             if(this.props.abertos.length > 0)
             {
-                //noArv = this.BuscandoNaTree(this.myTree,noGrafo);
-                noGrafo = this.props.abertos[0];
+                if(!!resultEncontrado || noArv.item.nome === this.props.result.nome)
+                {
+                    
+                }
             }
-            else
-                break;
-                 */
-        
     }
     ImprimindoArvore()
     {
@@ -102,10 +122,26 @@ export default class Largura extends BuscaP
     render()
     {
        
-        this.MontarArvore(this.props.no);
+        this.MontarArvore(this.myTree, this.props.no, false);
         return (
             <div>
-                <p style={{color:'black'}}>{this.props.no.nome}</p>
+                
+            </div>
+        );
+    }
+}
+/**
+ *  {this.props.abertos.map((nos, index) => {
+        return ( 
+            <td>
+                <tr>
+                    <Largura key={index} no={nos} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>
+                </tr>
+            </td>
+        );
+    })}
+
+    <p style={{color:'black'}}>{this.props.no.nome}</p>
                 <table>
                     <td>
                         <tr>1{this.myTree.ligacaoDaArvore.baixo === undefined && <p style={{color:'red'}}>nulo</p>}
@@ -132,18 +168,4 @@ export default class Largura extends BuscaP
                         </tr>
                     </td>
                 </table>
-            </div>
-        );
-    }
-}
-/**
- *  {this.props.abertos.map((nos, index) => {
-        return ( 
-            <td>
-                <tr>
-                    <Largura key={index} no={nos} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>
-                </tr>
-            </td>
-        );
-    })}
  */
