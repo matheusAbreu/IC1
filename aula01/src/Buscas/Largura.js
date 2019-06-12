@@ -82,7 +82,7 @@ export default class Largura extends BuscaP
     }
     MontarArvore(noArv, noGrafo)
     {
-        var tempBaixo = undefined, tempEsquerda = undefined, tempCima = undefined, tempDireita = undefined;
+        var tempBaixo = undefined, tempEsquerda = undefined, tempCima = undefined, tempDireita = undefined, tempProx = undefined;
         //if(!resultEncontrado)
           //  {
                 if(noGrafo.ligacao.baixo !== undefined)
@@ -126,11 +126,10 @@ export default class Largura extends BuscaP
                 }
             //}
             this.props.fechados.push(noGrafo);
-            this.props.abertos.shift();
-            
-            if(this.props.abertos.length > 0)
+            tempProx = this.props.abertos.shift();
+            if(this.props.abertos.length > 0) 
             {
-                this.MontarArvore(this.props.abertos[0], this.props.abertos[0].item);
+                this.MontarArvore( tempProx, tempProx.item);
                 /**
                  * if(resultEncontrado || noArv.item.nome === this.props.result.nome)
                     {
