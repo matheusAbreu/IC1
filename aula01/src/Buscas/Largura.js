@@ -22,6 +22,18 @@ export default class Largura extends BuscaP
         this.RemovendoEspecificoAbertos = this.RemovendoEspecificoAbertos.bind(this);
         this.ImprimindoArvore = this.ImprimindoArvore.bind(this);
         this.ProcurandoNoMyTree = this.ProcurandoNoMyTree.bind(this);
+        this.VerificaListaAbertosLargura = this.VerificaListaAbertosLargura.bind(this);
+        this.VerificaListasLargura = this.VerificaListasLargura.bind(this);
+    }
+    VerificaListaAbertosLargura(no)//:treeDraw()
+    {
+        for(let i = 0;i < this.props.abertos.length;i++)
+        {
+            if(this.props.abertos[i] === no)
+                return true;
+        }
+
+        return false;
     }
     ProcurandoNoMyTree(inicioTree, noProcurado)//Recebe um nó "normal"(O da estrutura Grafo.js) e retorna um treeForDraw
     {//inicioTree:treeForDraw; noProcurado:Grafos.no
@@ -64,68 +76,135 @@ export default class Largura extends BuscaP
         if(encontrou)
         this.props.abertos.shift();
     }
-    MontarArvore(noArv, noGrafo, resultEncontrado)
+    VerificaListasLargura(treedraw, noOrig)
     {
-        if(!resultEncontrado)
-            {
+        return (this.VerificarListaDeFechados(noOrig) || this.VerificaListaAbertosLargura(treedraw));
+    }
+    MontarArvore(noArv, noGrafo)
+    {
+        var tempBaixo = undefined, tempEsquerda = undefined, tempCima = undefined, tempDireita = undefined;
+        //if(!resultEncontrado)
+          //  {
                 if(noGrafo.ligacao.baixo !== undefined)
                 {
-                    if(!this.VerificarListas(noGrafo.ligacao.baixo))
+                    if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.baixo))
                     {
-                        noArv.ligacaoDaArvore.baixo =  new treeForDraw(noGrafo.ligacao.baixo);
-                        this.props.abertos.push(noGrafo.ligacao.baixo);
+                        tempBaixo = new treeForDraw(noGrafo.ligacao.baixo);
+                        noArv.ligacaoDaArvore.baixo =  tempBaixo;
+                        this.props.abertos.push(tempBaixo);
                     }
                 }
                 
                 if(noGrafo.ligacao.esquerda !== undefined)
                 {
-                    if(!this.VerificarListas(noGrafo.ligacao.esquerda))
+                    if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.esquerda))
                     {
-                        noArv.ligacaoDaArvore.esquerda =  new treeForDraw(noGrafo.ligacao.esquerda);
-                        this.props.abertos.push(noGrafo.ligacao.esquerda);
+                        tempEsquerda = new treeForDraw(noGrafo.ligacao.esquerda);
+                        noArv.ligacaoDaArvore.esquerda =  tempEsquerda;
+                        this.props.abertos.push(tempEsquerda);
                     }
                 }
 
                 if(noGrafo.ligacao.cima !== undefined)
                 {
-                    if(!this.VerificarListas(noGrafo.ligacao.cima))
+                    if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.cima))
                     {
-                        noArv.ligacaoDaArvore.cima =  new treeForDraw(noGrafo.ligacao.cima);
-                        this.props.abertos.push(noGrafo.ligacao.cima);
+                        tempCima = new treeForDraw(noGrafo.ligacao.cima);
+                        noArv.ligacaoDaArvore.cima =  tempCima;
+                        this.props.abertos.push(tempCima);
                     }                
                 }
 
                 if(noGrafo.ligacao.direita !== undefined)
                 {   
-                    if(!this.VerificarListas(noGrafo.ligacao.direita))
+                    if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.direita))
                     {
-                        noArv.ligacaoDaArvore.direita =  new treeForDraw(noGrafo.ligacao.direita);
-                        this.props.abertos.push(noGrafo.ligacao.direita);
+                        tempDireita = new treeForDraw(noGrafo.ligacao.direita);
+                        noArv.ligacaoDaArvore.direita =  tempDireita;
+                        this.props.abertos.push(tempDireita);
                     }
                 }
-            }
+            //}
             this.props.fechados.push(noGrafo);
             this.props.abertos.shift();
             
             if(this.props.abertos.length > 0)
             {
-                if(!!resultEncontrado || noArv.item.nome === this.props.result.nome)
-                {
-                    
-                }
+                this.MontarArvore(this.props.abertos[0], this.props.abertos[0].item);
+                /**
+                 * if(resultEncontrado || noArv.item.nome === this.props.result.nome)
+                    {
+                        
+                    }
+                 */
+                        
             }
     }
-    ImprimindoArvore()
+    ImprimindoArvore(noArv)
     {
+        let baixo = '', esquerda = '', cima = '', direita = '';
 
+        if(noArv.ligacaoDaArvore.baixo !== undefined)
+        {
+            baixo = <div>
+                        <table>
+                            <td>
+                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.baixo)}</tr>
+                            </td>
+                        </table>
+                    </div>;
+        }
+        if(noArv.ligacaoDaArvore.esquerda !== undefined)
+        {
+            esquerda = <div>
+                        <table>
+                            <td>
+                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.esquerda)}</tr>
+                            </td>
+                        </table>
+                    </div>;
+        }
+        if(noArv.ligacaoDaArvore.cima !== undefined)
+        {
+            cima = <div>
+                        <table>
+                            <td>
+                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.cima)}</tr>
+                            </td>
+                        </table>
+                    </div>;
+        }
+        if(noArv.ligacaoDaArvore.direita !== undefined)
+        {
+            direita = <div>
+                        <table>
+                            <td>
+                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.direita)}</tr>
+                            </td>
+                        </table>
+                    </div>;
+        }
+        return(
+            <div>
+                <p style={{color:'black'}}>{noArv.item.nome}</p>
+                <div>
+                    <table>
+                        <td><tr>1{baixo}</tr></td>
+                        <td><tr>2{esquerda}</tr></td>
+                        <td><tr>3{cima}</tr></td>
+                        <td><tr>4{direita}</tr></td>
+                    </table>
+                </div>
+            </div>
+        );
     }
     render()
     {
        
-        this.MontarArvore(this.myTree, this.props.no, false);
+        this.MontarArvore(this.myTree, this.props.no);
         return (
             <div>
-                
+            {this.ImprimindoArvore(this.myTree)}
             </div>
         );
     }
@@ -141,31 +220,5 @@ export default class Largura extends BuscaP
         );
     })}
 
-    <p style={{color:'black'}}>{this.props.no.nome}</p>
-                <table>
-                    <td>
-                        <tr>1{this.myTree.ligacaoDaArvore.baixo === undefined && <p style={{color:'red'}}>nulo</p>}
-                            {this.myTree.ligacaoDaArvore.baixo !== undefined &&
-                            <Largura no={this.myTree.ligacaoDaArvore.baixo} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result} />}
-                        </tr>
-                    </td>
-                    <td>
-                        <tr>2{this.myTree.ligacaoDaArvore.esquerda === undefined && <p style={{color:'red'}}>nulo</p>}
-                            {this.myTree.ligacaoDaArvore.esquerda !== undefined &&
-                            <Largura no={this.myTree.ligacaoDaArvore.esquerda} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result} />}
-                        </tr>
-                    </td>
-                    <td>
-                        <tr>3{this.myTree.ligacaoDaArvore.cima === undefined && <p style={{color:'red'}}>nulo</p>}
-                            {this.myTree.ligacaoDaArvore.cima !== undefined &&
-                            <Largura no={this.myTree.ligacaoDaArvore.cima} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result}/>}
-                        </tr>
-                    </td>
-                    <td>
-                        <tr>4{this.myTree.ligacaoDaArvore.direita === undefined && <p style={{color:'red'}}>nulo</p>}
-                            {this.myTree.ligacaoDaArvore.direita !== undefined &&
-                            <Largura no={this.myTree.ligacaoDaArvore.direita} abertos={this.props.abertos}  fechados={this.props.fechados} result={this.props.result} />}
-                        </tr>
-                    </td>
-                </table>
+   
  */
