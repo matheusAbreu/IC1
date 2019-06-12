@@ -130,12 +130,6 @@ export default class Largura extends BuscaP
             if(this.props.abertos.length > 0) 
             {
                 this.MontarArvore( tempProx, tempProx.item);
-                /**
-                 * if(resultEncontrado || noArv.item.nome === this.props.result.nome)
-                    {
-                        
-                    }
-                 */
                         
             }
     }
@@ -145,43 +139,19 @@ export default class Largura extends BuscaP
 
         if(noArv.ligacaoDaArvore.baixo !== undefined)
         {
-            baixo = <div>
-                        <table>
-                            <td>
-                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.baixo)}</tr>
-                            </td>
-                        </table>
-                    </div>;
+            baixo = <div>{this.ImprimindoArvore(noArv.ligacaoDaArvore.baixo)}</div>;
         }
         if(noArv.ligacaoDaArvore.esquerda !== undefined)
         {
-            esquerda = <div>
-                        <table>
-                            <td>
-                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.esquerda)}</tr>
-                            </td>
-                        </table>
-                    </div>;
+            esquerda = <div>{this.ImprimindoArvore(noArv.ligacaoDaArvore.esquerda)}</div>;
         }
         if(noArv.ligacaoDaArvore.cima !== undefined)
         {
-            cima = <div>
-                        <table>
-                            <td>
-                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.cima)}</tr>
-                            </td>
-                        </table>
-                    </div>;
+            cima = <div>{this.ImprimindoArvore(noArv.ligacaoDaArvore.cima)}</div>;
         }
         if(noArv.ligacaoDaArvore.direita !== undefined)
         {
-            direita = <div>
-                        <table>
-                            <td>
-                                <tr>{this.ImprimindoArvore(noArv.ligacaoDaArvore.direita)}</tr>
-                            </td>
-                        </table>
-                    </div>;
+            direita = <div>{this.ImprimindoArvore(noArv.ligacaoDaArvore.direita)} </div>;
         }
         return(
             <div>
@@ -208,16 +178,3 @@ export default class Largura extends BuscaP
         );
     }
 }
-/**
- *  {this.props.abertos.map((nos, index) => {
-        return ( 
-            <td>
-                <tr>
-                    <Largura key={index} no={nos} abertos={this.props.abertos} fechados={this.props.fechados} result={this.props.result}/>
-                </tr>
-            </td>
-        );
-    })}
-
-   
- */
