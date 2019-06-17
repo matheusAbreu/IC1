@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import BuscaP from './BuscaEmProfundidade';
 import Backtracking from './Backtracking';
 import Largura from './Largura';
-import ProfundidadeInt from './ProfundidadeIteratva';
+import Ordenada from './Ordenada';
 
 var DivState = {grafo:'Grafo-tab', BuscaP:'Profundidade-tab', Back:'Backtracking-tab', Larg:'Largura-tab',
-                ProfInt:'ProfundidadeIterativa-tab'};
+                Ordenada:'Ordenada-tab'};
 
 export default class Aba extends Component
 {
@@ -42,8 +42,8 @@ export default class Aba extends Component
                     this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.Larg});
                 break;
 
-                case(DivState.ProfInt):
-                    this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.ProfInt});
+                case(DivState.Ordenada):
+                    this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.Ordenada});
                 break;
             }
         }
@@ -70,8 +70,8 @@ export default class Aba extends Component
                         aria-controls='Largura' onClick={this.OcultandoDivs} aria-selected='true' >Largura</a>
                     </li>
                     <li className='nav-item '>
-                        <a className='nav-link btn btn-outline-primary' id='ProfundidadeIterativa-tab' data-toggle='tab' href='#ProfundidadeIterativa' role='tab' 
-                        aria-controls='ProfundidadeIterativa' onClick={this.OcultandoDivs} aria-selected='true' >Profundidade Iterativa</a>
+                        <a className='nav-link btn btn-outline-primary' id='Ordenada-tab' data-toggle='tab' href='#Ordenada' role='tab' 
+                        aria-controls='Ordenada' onClick={this.OcultandoDivs} aria-selected='true' >Ordenada</a>
                     </li>
                 </ul>
                 <div className='tab-content' id='myTabContent' >    
@@ -91,10 +91,10 @@ export default class Aba extends Component
                         </div>
                     </div>
                     <div id='Largura' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Largura-tab'>
-                            <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
+                            <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
                     </div>
-                    <div id='ProfundidadeIterativa' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='ProfundidadeIterativa-tab'>
-                            <ProfundidadeInt no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
+                    <div id='Ordenada' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Ordenada-tab'>
+                            <Ordenada no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
                     </div>
                 </div>    
             </div>

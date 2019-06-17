@@ -10,7 +10,7 @@ export default class Largura extends BuscaP
     render()
     {
         return(
-            <div>Hello, i'm profundidade iterativa code, nice to meet you</div>
+            <div>Hello, i'm Ordenada code, nice to meet you</div>
         );
     }
 }
