@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import BuscaP from './BuscaEmProfundidade';
 import Backtracking from './Backtracking';
 import Largura from './Largura';
+import ProfundidadeInt from './ProfundidadeInteratva';
 
-var DivState = {grafo:'Grafo-tab', BuscaP:'Profundidade-tab', Back:'Backtracking-tab', Larg:'Largura-tab'};
+var DivState = {grafo:'Grafo-tab', BuscaP:'Profundidade-tab', Back:'Backtracking-tab', Larg:'Largura-tab',
+                ProfInt:'ProfundidadeInterativa-tab'};
 
 export default class Aba extends Component
 {
@@ -39,6 +41,10 @@ export default class Aba extends Component
                 case(DivState.Larg):
                     this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.Larg});
                 break;
+
+                case(DivState.ProfInt):
+                    this.setState({divClass: 'tab-pane fade show active', estadoDiv:DivState.ProfInt});
+                break;
             }
         }
     }
@@ -63,6 +69,10 @@ export default class Aba extends Component
                         <a className='nav-link btn btn-outline-primary' id='Largura-tab' data-toggle='tab' href='#Largura' role='tab' 
                         aria-controls='Largura' onClick={this.OcultandoDivs} aria-selected='true' >Largura</a>
                     </li>
+                    <li className='nav-item '>
+                        <a className='nav-link btn btn-outline-primary' id='ProfundidadeInterativa-tab' data-toggle='tab' href='#ProfundidadeInterativa' role='tab' 
+                        aria-controls='ProfundidadeInterativa' onClick={this.OcultandoDivs} aria-selected='true' >Profundidade Interativa</a>
+                    </li>
                 </ul>
                 <div className='tab-content' id='myTabContent' >    
                     <div id='div-tab-grafo'  className={this.state.divClass} role='tabpanel' aria-labelledby='grafo-tab' >
@@ -82,6 +92,9 @@ export default class Aba extends Component
                     </div>
                     <div id='Largura' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Largura-tab'>
                             <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
+                    </div>
+                    <div id='ProfundidadeInterativa' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='ProfundidadeInterativa-tab'>
+                            <ProfundidadeInt no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
                     </div>
                 </div>    
             </div>
