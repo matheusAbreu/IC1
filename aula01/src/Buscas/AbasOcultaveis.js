@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import BuscaP from './BuscaEmProfundidade';
 import Backtracking from './Backtracking';
 import Largura from './Largura';
-import ProfundidadeInt from './ProfundidadeInteratva';
+import ProfundidadeInt from './ProfundidadeIteratva';
 
 var DivState = {grafo:'Grafo-tab', BuscaP:'Profundidade-tab', Back:'Backtracking-tab', Larg:'Largura-tab',
-                ProfInt:'ProfundidadeInterativa-tab'};
+                ProfInt:'ProfundidadeIterativa-tab'};
 
 export default class Aba extends Component
 {
@@ -70,8 +70,8 @@ export default class Aba extends Component
                         aria-controls='Largura' onClick={this.OcultandoDivs} aria-selected='true' >Largura</a>
                     </li>
                     <li className='nav-item '>
-                        <a className='nav-link btn btn-outline-primary' id='ProfundidadeInterativa-tab' data-toggle='tab' href='#ProfundidadeInterativa' role='tab' 
-                        aria-controls='ProfundidadeInterativa' onClick={this.OcultandoDivs} aria-selected='true' >Profundidade Interativa</a>
+                        <a className='nav-link btn btn-outline-primary' id='ProfundidadeIterativa-tab' data-toggle='tab' href='#ProfundidadeIterativa' role='tab' 
+                        aria-controls='ProfundidadeIterativa' onClick={this.OcultandoDivs} aria-selected='true' >Profundidade Iterativa</a>
                     </li>
                 </ul>
                 <div className='tab-content' id='myTabContent' >    
@@ -93,7 +93,7 @@ export default class Aba extends Component
                     <div id='Largura' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Largura-tab'>
                             <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
                     </div>
-                    <div id='ProfundidadeInterativa' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='ProfundidadeInterativa-tab'>
+                    <div id='ProfundidadeIterativa' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='ProfundidadeIterativa-tab'>
                             <ProfundidadeInt no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
                     </div>
                 </div>    
