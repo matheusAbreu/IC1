@@ -81,7 +81,7 @@ export default class Aba extends Component
                         </div>
                     </div>
                     <div id='Largura' className='tab-pane fade hidden' role='tabpanel' arial-labelledby='Largura-tab'>
-                            <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'S'} />
+                            <Largura no={this.props.BuscaP} abertos={[]} fechados={[]} result={'M'} />
                     </div>
                 </div>    
             </div>

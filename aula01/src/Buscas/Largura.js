@@ -80,15 +80,17 @@ export default class Largura extends BuscaP
     {
         return (this.VerificarListaDeFechados(noOrig) || this.VerificaListaAbertosLargura(treedraw));
     }
-    MontarArvore(noArv, noGrafo)
+    MontarArvore(noArv, noGrafo, resultEncontrado)
     {
         var tempBaixo = undefined, tempEsquerda = undefined, tempCima = undefined, tempDireita = undefined, tempProx = undefined;
-        //if(!resultEncontrado)
-          //  {
+        if(!resultEncontrado)
+            {
                 if(noGrafo.ligacao.baixo !== undefined)
                 {
                     if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.baixo))
                     {
+                        if(noGrafo.ligacao.baixo.nome === this.props.result)
+                        {resultEncontrado = true;}
                         tempBaixo = new treeForDraw(noGrafo.ligacao.baixo);
                         noArv.ligacaoDaArvore.baixo =  tempBaixo;
                         this.props.abertos.push(tempBaixo);
@@ -97,6 +99,8 @@ export default class Largura extends BuscaP
                 
                 if(noGrafo.ligacao.esquerda !== undefined)
                 {
+                    if(noGrafo.ligacao.esquerda.nome === this.props.result)
+                        {resultEncontrado = true;}
                     if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.esquerda))
                     {
                         tempEsquerda = new treeForDraw(noGrafo.ligacao.esquerda);
@@ -107,6 +111,8 @@ export default class Largura extends BuscaP
 
                 if(noGrafo.ligacao.cima !== undefined)
                 {
+                    if(noGrafo.ligacao.cima.nome === this.props.result)
+                        {resultEncontrado = true;}
                     if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.cima))
                     {
                         tempCima = new treeForDraw(noGrafo.ligacao.cima);
@@ -117,6 +123,8 @@ export default class Largura extends BuscaP
 
                 if(noGrafo.ligacao.direita !== undefined)
                 {   
+                    if(noGrafo.ligacao.direita.nome === this.props.result)
+                        {resultEncontrado = true;}
                     if(!this.VerificaListasLargura(noArv, noGrafo.ligacao.direita))
                     {
                         tempDireita = new treeForDraw(noGrafo.ligacao.direita);
@@ -124,12 +132,15 @@ export default class Largura extends BuscaP
                         this.props.abertos.push(tempDireita);
                     }
                 }
-            //}
+            }
             this.props.fechados.push(noGrafo);
             tempProx = this.props.abertos.shift();
             if(this.props.abertos.length > 0) 
             {
-                this.MontarArvore( tempProx, tempProx.item);
+                if(resultEncontrado)
+                    this.MontarArvore( tempProx, tempProx.item, true);
+                else
+                    this.MontarArvore( tempProx, tempProx.item, false);
                         
             }
     }
@@ -157,7 +168,7 @@ export default class Largura extends BuscaP
             <div>
                 <p style={{color:'black'}}>{noArv.item.nome}</p>
                 <div>
-                    <table>
+                    <table style={{textAlign:'center'}}>
                         <td><tr>1{baixo}</tr></td>
                         <td><tr>2{esquerda}</tr></td>
                         <td><tr>3{cima}</tr></td>
@@ -170,7 +181,7 @@ export default class Largura extends BuscaP
     render()
     {
        
-        this.MontarArvore(this.myTree, this.props.no);
+        this.MontarArvore(this.myTree, this.props.no, false);
         return (
             <div>
             {this.ImprimindoArvore(this.myTree)}
