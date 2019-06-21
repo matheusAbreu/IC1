@@ -1,21 +1,21 @@
 import React from 'react';
+import {Alert} from 'react-bootstrap';
 import TabsDasBuscas from './TabsDasBuscas';
+import GrafoSemPeso from './Grafo';
 
 function App() {
   return (
     <div >
-      <p>Estou funcionando ok!</p>
+      <Alert variant={'dark'} style={{textAlign:'center'}}>
+        <h3>Inteligencia computacional 1</h3>
+      </Alert>
       <TabsDasBuscas 
       title={[
-        '1',
-          '2',
-            '3',
-              '4']}
+        'Grafo Sem Peso',
+          '2',]}
       conteudo={[
-        'sei la',
+        <GrafoSemPeso title={'Grafo'}/>,
          'vai que',
-          'daCerto',
-          'ainda ta simples'
           ]} 
           />
       
