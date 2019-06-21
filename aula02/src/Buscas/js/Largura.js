@@ -165,9 +165,9 @@ export default class Largura extends BuscaP
             direita = <div>{this.ImprimindoArvore(noArv.ligacaoDaArvore.direita)} </div>;
         }
         return(
-            <div>
+            <div className='container'>
                 <p style={{color:'black'}}>{noArv.item.nome}</p>
-                <div>
+                <div className='row'>
                     <table style={{textAlign:'center'}}>
                         <td><tr>1{baixo}</tr></td>
                         <td><tr>2{esquerda}</tr></td>
