@@ -50,29 +50,67 @@ export default class GrafoComPeso extends Component{
     constructor(props)
     {
         super(props);
-        this.expl2 = new Grafo('Exemplo 2');
-        this.expl3 = new Grafo('Exemplo 3');
+        this.state = {
+            expl2 : new Grafo('Exemplo 2'),
+            expl3 : new Grafo('Exemplo 3')
+        };
+        
 
         this.MontarGrafo = this.MontarGrafo.bind(this);
+        this.LigarGrafo = this.LigarGrafo.bind(this);
+        this.ImprimindoGrafo = this.ImprimindoGrafo.bind(this);
     }
-    MontarGrafo(grafo, num)
+    LigarGrafo(){}
+    ImprimindoGrafo(grafo)
+    {
+        return(
+            <div className='container'>
+                <p>{grafo.nome}</p>
+               <div className='row'>
+                {grafo.listaDeNos.map((nos, index) => {
+                        return <LittleCard key={index} title={grafo.listaDeNos[index].nome} 
+                        text={grafo.listaDeNos[index].listaLigacao.map((itens, id) =>{
+                            return <div  key={id}>{itens.nome}</div>
+                        }) } />
+                    })}
+               </div>
+            </div>
+        );
+    }
+    MontarGrafo(grafo, num =2)
     {
         switch(num)
         {
             case 2:
+                this.state.expl2.AddNo('A');
+                this.state.expl2.AddNo('B');
+                this.state.expl2.AddNo('C');
+                this.state.expl2.AddNo('D');
+                this.state.expl2.AddNo('E');
+                this.state.expl2.AddNo('F');
+                this.state.expl2.AddNo('G');
                 break;
             case 3:
+                grafo.AddNo('A');
+                grafo.AddNo('B');
+                grafo.AddNo('C');
+                grafo.AddNo('D');
+                grafo.AddNo('E');
+                grafo.AddNo('F');
+                grafo.AddNo('G');
                 break;
             default:
                 break;
         }
+        this.setState({... this.state.expl2});
     }
     render()
     {
         return(
+            
             <div style={{textAlign:'center'}}>
-                <Button variant="outline-primary" >Montar Exemplo 2</Button>
-                Hello, i'm the {this.props.title} code, nice to meet you!
+                <Button variant="outline-primary" onClick={this.MontarGrafo}>Montar Exemplo 2</Button>
+                {this.ImprimindoGrafo(this.state.expl2)}
             </div>
         );
     }
