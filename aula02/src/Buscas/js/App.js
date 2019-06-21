@@ -2,6 +2,7 @@ import React from 'react';
 import {Alert} from 'react-bootstrap';
 import TabsDasBuscas from './TabsDasBuscas';
 import GrafoSemPeso from './Grafo';
+import GrafoComPeso from './GrafoComPeso';
 
 function App() {
   return (
@@ -11,11 +12,11 @@ function App() {
       </Alert>
       <TabsDasBuscas 
       title={[
-        'Grafo Sem Peso',
-          '2',]}
+        'Grafo Com Peso',
+        'Grafo Sem Peso']}
       conteudo={[
-        <GrafoSemPeso title={'Grafo'}/>,
-         'vai que',
+        <GrafoComPeso title={'Grafo'}/>,
+        <GrafoSemPeso title={'Grafo'}/>         
           ]} 
           />
       
