@@ -11,14 +11,14 @@ function App() {
         <h3>Inteligencia computacional 1</h3>
       </Alert>
       <TabsDasBuscas 
-      title={[
-        'Grafo Com Peso',
-        'Grafo Sem Peso']}
-      conteudo={[
-        <GrafoComPeso title={'Grafo'}/>,
-        <GrafoSemPeso title={'Grafo'}/>         
-          ]} 
-          />
+        title={[
+          'Grafo Com Peso',
+          'Grafo Sem Peso']}
+        conteudo={[
+          <GrafoComPeso title={'Grafo'}/>,
+          <GrafoSemPeso title={'Grafo'}/>         
+            ]} 
+            />
       
     </div>
   );

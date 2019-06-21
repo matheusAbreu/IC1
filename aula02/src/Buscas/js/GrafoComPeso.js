@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Button} from 'react-bootstrap';
-import Aba from './AbasOcultaveis';
+import TabsDasBuscas from './TabsDasBuscas';
+import Ordenada from './Ordenada';
 import LittleCard from './LittleCard';
 
 class Ligacao
@@ -26,7 +27,7 @@ class No
         this.listaLigacao = [];
     }
 
-    AddLigacao(no, peso )
+    AddLigacao(no, peso)
     {
         var tempLigacao = new Ligacao(no, peso);
         this.listaLigacao.push(tempLigacao);
@@ -179,14 +180,36 @@ export default class GrafoComPeso extends Component{
         return(
             
             <>
-                <div style={{textAlign:'center'}}>
-                    <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(2)}>Montar Exemplo 2</Button>
-                    {this.ImprimindoGrafo(this.state.expl2)}
-                </div>
-                <div style={{textAlign:'center'}}>
-                <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(3)}>Montar Exemplo 3</Button>
-                {this.ImprimindoGrafo(this.state.expl3)}
-            </div>
+                <TabsDasBuscas 
+                    title={['Exemplo 2',
+                                'Exemplo 3',
+                                    'Ordenada']} 
+                     conteudo={[
+                        <div style={{textAlign:'center'}}>
+                            <TabsDasBuscas 
+                                title={['Grafo',
+                                         'Ordenada']} 
+                                conteudo={[
+                                            <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(2)}>Montar Exemplo 2</Button>
+                                            {this.ImprimindoGrafo(this.state.expl2)}</>,
+                                            <Ordenada grafo={this.state.expl2} abertos={[]} fechados={[]} result={'G'} />
+                                ]} />
+                            
+                        </div>,
+                                <div style={{textAlign:'center'}}>
+                                    <TabsDasBuscas 
+                                        title={['Grafo',
+                                                'Ordenada']} 
+                                        conteudo={[
+                                                    <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(3)}>Montar Exemplo 3</Button>
+                                                    {this.ImprimindoGrafo(this.state.expl3)}</>,
+                                                    <Ordenada grafo={this.state.expl3} abertos={[]} fechados={[]} result={'G'} />
+                                        ]} />
+                                </div>,
+                               
+                     ]} />
+                
+                
             </>
         );
     }

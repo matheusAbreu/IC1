@@ -6,7 +6,9 @@ export default class Largura extends BuscaP
     constructor(props)
     {
         super(props);
+        this.ProcurandoMenorLista = this.ProcurandoMenorLista.bind(this);
     }
+    ProcurandoMenorLista(){}
     render()
     {
         return(
