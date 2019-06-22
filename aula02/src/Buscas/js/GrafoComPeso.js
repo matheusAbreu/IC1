@@ -32,6 +32,16 @@ class No
         var tempLigacao = new Ligacao(no, peso);
         this.listaLigacao.push(tempLigacao);
     }
+    ListaVazia()
+    {
+        if(this.listaLigacao.length === 0)
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
 export class Grafo
 {
@@ -87,8 +97,8 @@ export default class GrafoComPeso extends Component{
         {
             case 2:
                 this.DuplaLiga(grafo, 'A', 'B', 9);
-                this.DuplaLiga(grafo, 'A', 'D', 13);
                 this.DuplaLiga(grafo, 'A', 'C', 5);
+                this.DuplaLiga(grafo, 'A', 'D', 13);
                 this.DuplaLiga(grafo, 'B', 'D', 3);
                 this.DuplaLiga(grafo, 'B', 'E', 10);
                 this.DuplaLiga(grafo, 'C', 'F', 12);
@@ -127,7 +137,7 @@ export default class GrafoComPeso extends Component{
                 {grafo.listaDeNos.map((nos, index) => {
                         return <LittleCard key={index} title={nos.nome} 
                         text={nos.listaLigacao.map((item, id) =>{
-                            return <div>{item.noLigado.nome}->{item.pesoLigacao}</div>
+                            return <div key={id}>{item.noLigado.nome}->{item.pesoLigacao}</div>
                         }) } />
                     })}
                </div>
@@ -192,7 +202,7 @@ export default class GrafoComPeso extends Component{
                                 conteudo={[
                                             <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(2)}>Montar Exemplo 2</Button>
                                             {this.ImprimindoGrafo(this.state.expl2)}</>,
-                                            <Ordenada grafo={this.state.expl2} abertos={[]} fechados={[]} result={'G'} />
+                                            <Ordenada no={this.state.expl2.listaDeNos[0]} abertos={[]} fechados={[]} result={'G'} />
                                 ]} />
                             
                         </div>,
@@ -203,7 +213,7 @@ export default class GrafoComPeso extends Component{
                                         conteudo={[
                                                     <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(3)}>Montar Exemplo 3</Button>
                                                     {this.ImprimindoGrafo(this.state.expl3)}</>,
-                                                    <Ordenada grafo={this.state.expl3} abertos={[]} fechados={[]} result={'G'} />
+                                                    <Ordenada no={this.state.expl3} abertos={[]} fechados={[]} result={'G'} />
                                         ]} />
                                 </div>,
                                
