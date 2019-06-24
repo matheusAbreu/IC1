@@ -3,6 +3,7 @@ import {Button} from 'react-bootstrap';
 import TabsDasBuscas from './TabsDasBuscas';
 import Ordenada from './Ordenada';
 import LittleCard from './LittleCard';
+import Gulosa from './Gulosa';
 
 class Ligacao
 {
@@ -19,12 +20,13 @@ class Ligacao
     }
 }
 
-class No
+export class No
 {
     constructor(meuNome) 
     {
         this.nome = meuNome;
         this.listaLigacao = [];
+        this.avaliacaoHeuristica = 0;
     }
 
     AddLigacao(no, peso)
@@ -198,11 +200,13 @@ export default class GrafoComPeso extends Component{
                         <div style={{textAlign:'center'}}>
                             <TabsDasBuscas 
                                 title={['Grafo',
-                                         'Ordenada']} 
+                                         'Ordenada',
+                                            'Gulosa']} 
                                 conteudo={[
                                             <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(2)}>Montar Exemplo 2</Button>
                                             {this.ImprimindoGrafo(this.state.expl2)}</>,
-                                            <Ordenada no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />
+                                            <Ordenada no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />,
+                                                <Gulosa no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />
                                 ]} />
                             
                         </div>,
@@ -213,7 +217,7 @@ export default class GrafoComPeso extends Component{
                                         conteudo={[
                                                     <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(3)}>Montar Exemplo 3</Button>
                                                     {this.ImprimindoGrafo(this.state.expl3)}</>,
-                                                    <Ordenada no={this.state.expl3.listaDeNos[0]} abertos={[]} fechados={[]} result={'G'} />
+                                                    <Ordenada no={this.state.expl3.listaDeNos[0]} abertos={[this.state.expl3.listaDeNos[0]]} fechados={[]} result={'G'} />
                                         ]} />
                                 </div>,
                                

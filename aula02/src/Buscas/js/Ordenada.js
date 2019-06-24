@@ -22,7 +22,6 @@ export default class Ordenada extends React.Component
     {
         super(props);
         this.ArvBusca = undefined;
-        this.ProcurandoMenorPesoLista = this.ProcurandoMenorPesoLista.bind(this);
         this.MontarArvoreResult = this.MontarArvoreResult.bind(this);
         this.ImprimindoArvorePesada = this.ImprimindoArvorePesada.bind(this);
         this.VerificandoListaFechados = this.VerificandoListaFechados.bind(this);
@@ -49,8 +48,6 @@ export default class Ordenada extends React.Component
                 }    
             }
         }
-        for(let x = 0;x < this.props.abertos.length;x++)
-        {   alert(this.props.abertos[x].no.nome+"!!!!");}
     }
     AddListaAbertos(novoNo)
     {
@@ -114,10 +111,6 @@ export default class Ordenada extends React.Component
             else
                 return <></>;
     }
-    ProcurandoMenorPesoLista(lista)
-    {
-
-    }
     MontarArvoreResult()
     {
         var noCandidato = new ArvorePesada(this.props.abertos.shift(), 0);
@@ -127,46 +120,39 @@ export default class Ordenada extends React.Component
            
             while(true) // xgh brabão aqui
             {
-                alert(noCandidato.no.nome+"<-");
-                    
-                    if(noCandidato.no !== undefined && noCandidato.no.nome === this.props.result)
+                if(noCandidato.no !== undefined && noCandidato.no.nome === this.props.result)
+                {
+                    return arvResult;
+                }
+                else
+                {
+                    if(!this.VerificandoListaFechados(noCandidato.no))
                     {
-                        return arvResult;
-                    }
-                    else
-                    {
-                        if(!this.VerificandoListaFechados(noCandidato.no))
+                        this.AddListaFechados(noCandidato.no);
+                        for(let i=0; i < noCandidato.no.listaLigacao.length ;i++)
                         {
-                            this.AddListaFechados(noCandidato.no);
-                            for(let i=0; i < noCandidato.no.listaLigacao.length ;i++)
+                            if(!this.VerificandoListaFechados(noCandidato.no.listaLigacao[i].noLigado))
                             {
-                                if(!this.VerificandoListaFechados(noCandidato.no.listaLigacao[i].noLigado))
-                                {
-                                    alert(noCandidato.no.listaLigacao[i].noLigado.nome+"->"+noCandidato.no.listaLigacao[i].pesoLigacao);
-                                
-                                    noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado,noCandidato.no.listaLigacao[i].pesoLigacao);
-                                    this.AddListaAbertos(noCandidato.arvoreDeCaminha[i - indexcorr]);
-                                    
-                                }
-                                else
-                                {
-                                    indexcorr++;
-                                }
+                                noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado,noCandidato.no.listaLigacao[i].pesoLigacao);
+                                this.AddListaAbertos(noCandidato.arvoreDeCaminha[i - indexcorr]);
+                            }
+                            else
+                            {
+                                indexcorr++;
                             }
                         }
-                        indexcorr = 0;
-                        this.OrganizaListaAbertos();
                     }
-                    alert(noCandidato.no.nome);
-                    if(this.props.abertos.length > 0)
-                    {
-                        noCandidato = this.props.abertos.shift();
-                    }
-                    else
-                    {
-                        alert(this.props.abertos.length + "AaA");
-                        break;
-                    }
+                    indexcorr = 0;
+                    this.OrganizaListaAbertos();
+                }
+                if(this.props.abertos.length > 0)
+                {
+                    noCandidato = this.props.abertos.shift();
+                }
+                else
+                {
+                    break;
+                }
             }
         }
         return arvResult;
