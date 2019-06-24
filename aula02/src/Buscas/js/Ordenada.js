@@ -35,16 +35,22 @@ export default class Ordenada extends React.Component
     {
         let temp;
         if(this.props.abertos.length > 0)
+        {
             for(let i=0;i < this.props.abertos.length; i++)
             {
-                for(let j=this.props.abertos.length; j > 0; j++)
-                if(this.props.abertos[i].pesoRelativo > this.props.abertos[j].pesoRelativo)
+                for(let j=this.props.abertos.length-1; j > i; j--)
                 {
-                    temp = this.props.abertos[j];
-                    this.props.abertos[j] = this.props.abertos[i];
-                    this.props.abertos[i] = temp;
-                }
+                    if(this.props.abertos[i].pesoRelativo > this.props.abertos[j].pesoRelativo)
+                    {
+                        temp = this.props.abertos[i];
+                        this.props.abertos[i] = this.props.abertos[j];
+                        this.props.abertos[j] = temp;
+                    }
+                }    
             }
+        }
+        for(let x = 0;x < this.props.abertos.length;x++)
+        {   alert(this.props.abertos[x].no.nome+"!!!!");}
     }
     AddListaAbertos(novoNo)
     {
@@ -59,15 +65,9 @@ export default class Ordenada extends React.Component
         {
             for(let i = 0; i < this.props.abertos.length; i++)
             {
-                if(this.props.abertos[i].no === ArvVeri.no)
+                if(this.props.abertos[i].no.nome === ArvVeri.no.nome)
                 {
-                    if(this.props.abertos[i].pesoRelativo < ArvVeri.pesoRelativo)
-                    {
-                        return true;
-                    }
-                    else{
-                        return false;
-                    }
+                    return true;
                 }
             }
         }
@@ -86,7 +86,7 @@ export default class Ordenada extends React.Component
         {
             for(let i = 0; i < this.props.fechados.length; i++)
             {
-                if(this.props.fechados[i] === noVeri)
+                if(this.props.fechados[i].nome === noVeri.nome)
                 {
                     return true;
                 }
@@ -101,7 +101,7 @@ export default class Ordenada extends React.Component
             return(
                 <div className='row'>
                     <div className='container'>
-                        <p>{arvImpri.no.nome}->{arvImpri.pesoRelativo}(QntFilhos({arvImpri.arvoreDeCaminha.length}))</p>
+                        <p>{arvImpri.no.nome}->{arvImpri.pesoRelativo}</p>
                         <table>
                             {arvImpri.arvoreDeCaminha.map((ramoArv, id)=>{
                                 return (<td><tr>
@@ -119,31 +119,57 @@ export default class Ordenada extends React.Component
     {
 
     }
-    MontarArvoreResult(noAtual)
+    MontarArvoreResult()
     {
-        if(noAtual.no !== undefined)
-        {
-            if(noAtual.no.listaLigacao !== undefined)
+        var noCandidato = new ArvorePesada(this.props.abertos.shift(), 0);
+        var arvResult = noCandidato;
+        var indexcorr = 0;
+        if(noCandidato.no !== undefined){
+           
+            while(true) // xgh brabão aqui
             {
-                if(!this.VerificandoListaFechados(noAtual.no))
-                {
-                    for(let i=0;i < noAtual.no.listaLigacao.length; i++)
+                alert(noCandidato.no.nome+"<-");
+                    this.AddListaFechados(noCandidato.no);
+                    if(noCandidato.no !== undefined && noCandidato.no.nome === this.props.result)
                     {
-                        noAtual.AddNosNoCaminho(noAtual.no.listaLigacao[i].noLigado,
-                            noAtual.no.listaLigacao[i].pesoLigacao);
-
-                        this.AddListaFechados(noAtual.arvoreDeCaminha[i].no);
-                        this.MontarArvoreResult(noAtual.arvoreDeCaminha[i]);
+                        return arvResult;
                     }
+                    else
+                    {
+                        for(let i=0; i < noCandidato.no.listaLigacao.length ;i++)
+                        {
+                            if(!this.VerificandoListaFechados(noCandidato.no.listaLigacao[i].noLigado))
+                            {
+                                alert(noCandidato.no.listaLigacao[i].noLigado.nome+"->"+noCandidato.no.listaLigacao[i].pesoLigacao);
+                                noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado,noCandidato.no.listaLigacao[i].pesoLigacao);
+                                this.AddListaAbertos(noCandidato.arvoreDeCaminha[i - indexcorr]);
+                            }
+                            else
+                            {
+                                indexcorr++;
+                            }
+                        }
+                        indexcorr = 0;
+                        this.OrganizaListaAbertos();
                     
-                }
-            }   
+                    }
+                    alert(noCandidato.no.nome);
+                    if(this.props.abertos.length > 0)
+                    {
+                        noCandidato = this.props.abertos.shift();
+                    }
+                    else
+                    {
+                        alert(this.props.abertos.length + "AaA");
+                        break;
+                    }
+            }
         }
-        return noAtual;
+        return arvResult;
     }
     render()
     {
-        this.ArvBusca = this.MontarArvoreResult((new ArvorePesada(this.props.abertos.shift(), 0)));
+        this.ArvBusca = this.MontarArvoreResult();
         return(
             <div>{this.ImprimindoArvorePesada(this.ArvBusca)}</div>
         );

@@ -12,11 +12,9 @@ function App() {
       </Alert>
       <TabsDasBuscas 
         title={[
-          'Grafo Com Peso',
-          'Grafo Sem Peso']}
+          'Grafo Com Peso']}
         conteudo={[
-          <GrafoComPeso title={'Grafo'}/>,
-          <GrafoSemPeso title={'Grafo'}/>         
+          <GrafoComPeso title={'Grafo'}/>        
             ]} 
             />
       
