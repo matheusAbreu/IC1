@@ -4,6 +4,7 @@ import TabsDasBuscas from './TabsDasBuscas';
 import Ordenada from './Ordenada';
 import LittleCard from './LittleCard';
 import Gulosa from './Gulosa';
+import AEstrela from './AEstrela';
 
 class Ligacao
 {
@@ -201,12 +202,14 @@ export default class GrafoComPeso extends Component{
                             <TabsDasBuscas 
                                 title={['Grafo',
                                          'Ordenada',
-                                            'Gulosa']} 
+                                            'Gulosa',
+                                            'A-Estrela']} 
                                 conteudo={[
                                             <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(2)}>Montar Exemplo 2</Button>
                                             {this.ImprimindoGrafo(this.state.expl2)}</>,
                                             <Ordenada no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />,
-                                                <Gulosa no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />
+                                                <Gulosa no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />,
+                                                     <AEstrela no={this.state.expl2.listaDeNos[0]} abertos={[this.state.expl2.listaDeNos[0]]} fechados={[]} result={'G'} />
                                 ]} />
                             
                         </div>,

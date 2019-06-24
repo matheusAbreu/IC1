@@ -17,12 +17,13 @@ class ArvorePesada
     }
 }
 
-export default class Gulosa extends Ordenada
+export default class AEstrela extends Ordenada
 {
    constructor(props)
    {
       super(props);
       this.arvResult = undefined;
+
       this.OrganizaListaAbertos = this.OrganizaListaAbertos.bind(this);
       this.MontandoArvoreGulosaResult = this.MontandoArvoreGulosaResult.bind(this);
       this.ValorHeuristico = this.ValorHeuristico.bind(this);
@@ -43,21 +44,22 @@ export default class Gulosa extends Ordenada
    OrganizaListaAbertos()
    {
       let temp;
-        if(this.props.abertos.length > 0)
-        {
-            for(let i=0;i < this.props.abertos.length; i++)
-            {
-                for(let j=this.props.abertos.length-1; j > i; j--)
-                {
-                    if(this.ValorHeuristico(this.props.abertos[i].no.nome) > this.ValorHeuristico(this.props.abertos[j].no.nome))
-                    {
-                        temp = this.props.abertos[i];
-                        this.props.abertos[i] = this.props.abertos[j];
-                        this.props.abertos[j] = temp;
-                    }
-                }    
-            }
-        }
+      if(this.props.abertos.length > 0)
+      {
+         for(let i=0;i < this.props.abertos.length; i++)
+         {
+               for(let j=this.props.abertos.length-1; j > i; j--)
+               {
+                  if((this.props.abertos[i].pesoRelativo + this.ValorHeuristico(this.props.abertos[i].no.nome)) >
+                      (this.props.abertos[j].pesoRelativo + this.ValorHeuristico(this.props.abertos[j].no.nome)))
+                  {
+                     temp = this.props.abertos[i];
+                     this.props.abertos[i] = this.props.abertos[j];
+                     this.props.abertos[j] = temp;
+                  }
+               }    
+         }
+      }
    }
    MontandoArvoreGulosaResult()
    {
@@ -81,7 +83,7 @@ export default class Gulosa extends Ordenada
                       {
                           if(!this.VerificandoListaFechados(noCandidato.no.listaLigacao[i].noLigado))
                           {
-                              noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado,noCandidato.no.listaLigacao[i].pesoLigacao);
+                              noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado, noCandidato.no.listaLigacao[i].pesoLigacao);
                               this.AddListaAbertos(noCandidato.arvoreDeCaminha[i - indexcorr]);
                           }
                           else
@@ -106,7 +108,7 @@ export default class Gulosa extends Ordenada
       return arvResult;  
    }
    render()
-   { 
+   {
       this.arvResult = this.MontandoArvoreGulosaResult();
       return(
          <div>
