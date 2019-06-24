@@ -54,10 +54,9 @@ export default class Ordenada extends React.Component
     }
     AddListaAbertos(novoNo)
     {
-        if(!this.VerificandoListaAbertos(novoNo))
-        {
-            this.props.abertos.push(novoNo);
-        }
+
+        this.props.abertos.push(novoNo);
+
     }
     VerificandoListaAbertos(ArvVeri)//Recebe tipo:ArvorePesada
     {
@@ -129,29 +128,34 @@ export default class Ordenada extends React.Component
             while(true) // xgh brabão aqui
             {
                 alert(noCandidato.no.nome+"<-");
-                    this.AddListaFechados(noCandidato.no);
+                    
                     if(noCandidato.no !== undefined && noCandidato.no.nome === this.props.result)
                     {
                         return arvResult;
                     }
                     else
                     {
-                        for(let i=0; i < noCandidato.no.listaLigacao.length ;i++)
+                        if(!this.VerificandoListaFechados(noCandidato.no))
                         {
-                            if(!this.VerificandoListaFechados(noCandidato.no.listaLigacao[i].noLigado))
+                            this.AddListaFechados(noCandidato.no);
+                            for(let i=0; i < noCandidato.no.listaLigacao.length ;i++)
                             {
-                                alert(noCandidato.no.listaLigacao[i].noLigado.nome+"->"+noCandidato.no.listaLigacao[i].pesoLigacao);
-                                noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado,noCandidato.no.listaLigacao[i].pesoLigacao);
-                                this.AddListaAbertos(noCandidato.arvoreDeCaminha[i - indexcorr]);
-                            }
-                            else
-                            {
-                                indexcorr++;
+                                if(!this.VerificandoListaFechados(noCandidato.no.listaLigacao[i].noLigado))
+                                {
+                                    alert(noCandidato.no.listaLigacao[i].noLigado.nome+"->"+noCandidato.no.listaLigacao[i].pesoLigacao);
+                                
+                                    noCandidato.AddNosNoCaminho(noCandidato.no.listaLigacao[i].noLigado,noCandidato.no.listaLigacao[i].pesoLigacao);
+                                    this.AddListaAbertos(noCandidato.arvoreDeCaminha[i - indexcorr]);
+                                    
+                                }
+                                else
+                                {
+                                    indexcorr++;
+                                }
                             }
                         }
                         indexcorr = 0;
                         this.OrganizaListaAbertos();
-                    
                     }
                     alert(noCandidato.no.nome);
                     if(this.props.abertos.length > 0)
