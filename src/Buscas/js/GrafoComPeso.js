@@ -216,11 +216,15 @@ export default class GrafoComPeso extends Component{
                                 <div style={{textAlign:'center'}}>
                                     <TabsDasBuscas 
                                         title={['Grafo',
-                                                'Ordenada']} 
+                                                'Ordenada',
+                                                    'Gulosa',
+                                                    'A-Estrela']} 
                                         conteudo={[
                                                     <> <Button variant="outline-primary" onClick={(e) => this.MontarGrafo(3)}>Montar Exemplo 3</Button>
                                                     {this.ImprimindoGrafo(this.state.expl3)}</>,
-                                                    <Ordenada no={this.state.expl3.listaDeNos[0]} abertos={[this.state.expl3.listaDeNos[0]]} fechados={[]} result={'G'} />
+                                                        <Ordenada no={this.state.expl3.listaDeNos[0]} abertos={[this.state.expl3.listaDeNos[0]]} fechados={[]} result={'G'} />,
+                                                            <Gulosa no={this.state.expl3.listaDeNos[0]} abertos={[this.state.expl3.listaDeNos[0]]} fechados={[]} result={'G'} />,
+                                                                <AEstrela no={this.state.expl3.listaDeNos[0]} abertos={[this.state.expl3.listaDeNos[0]]} fechados={[]} result={'G'} />
                                         ]} />
                                 </div>,
                                
